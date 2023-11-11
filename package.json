@@ -1,5 +1,5 @@
 {
-  "name": "create-t3-turbo",
+  "name": "menus-for-ucla",
   "private": true,
   "engines": {
     "node": ">=18.18.2"
@@ -21,7 +21,7 @@
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
-    "@acme/prettier-config": "workspace:^0.1.0",
+    "@menus-for-ucla/prettier-config": "workspace:^0.1.0",
     "@turbo/gen": "^1.10.16",
     "prettier": "^3.0.3",
     "turbo": "^1.10.16",
@@ -32,5 +32,5 @@
       "@auth/core": "0.18.0"
     }
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@menus-for-ucla/prettier-config"
 }

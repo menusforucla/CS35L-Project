@@ -1,6 +1,5 @@
+import baseConfig from "@menus-for-ucla/tailwind-config";
 import type { Config } from "tailwindcss";
-
-import baseConfig from "@acme/tailwind-config";
 
 export default {
   content: ["./src/**/*.{ts,tsx}"],

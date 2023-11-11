@@ -1,5 +1,5 @@
 {
-  "name": "@acme/api",
+  "name": "@menus-for-ucla/api",
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",
@@ -12,17 +12,17 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/auth": "workspace:^0.1.0",
-    "@acme/db": "workspace:^0.1.0",
+    "@menus-for-ucla/auth": "workspace:^0.1.0",
+    "@menus-for-ucla/db": "workspace:^0.1.0",
     "@trpc/client": "next",
     "@trpc/server": "next",
     "superjson": "2.2.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@menus-for-ucla/eslint-config": "workspace:^0.2.0",
+    "@menus-for-ucla/prettier-config": "workspace:^0.1.0",
+    "@menus-for-ucla/tsconfig": "workspace:^0.1.0",
     "eslint": "^8.53.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
@@ -30,8 +30,8 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@acme/eslint-config/base"
+      "@menus-for-ucla/eslint-config/base"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@menus-for-ucla/prettier-config"
 }

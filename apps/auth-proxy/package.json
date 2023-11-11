@@ -1,5 +1,5 @@
 {
-  "name": "@acme/auth-proxy",
+  "name": "@menus-for-ucla/auth-proxy",
   "private": true,
   "type": "module",
   "scripts": {
@@ -14,10 +14,10 @@
     "@auth/core": "^0.18.0"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tailwind-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@menus-for-ucla/eslint-config": "workspace:^0.2.0",
+    "@menus-for-ucla/prettier-config": "workspace:^0.1.0",
+    "@menus-for-ucla/tailwind-config": "workspace:^0.1.0",
+    "@menus-for-ucla/tsconfig": "workspace:^0.1.0",
     "eslint": "^8.53.0",
     "nitropack": "^2.7.2",
     "prettier": "^3.0.3",
@@ -26,8 +26,8 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@acme/eslint-config/base"
+      "@menus-for-ucla/eslint-config/base"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@menus-for-ucla/prettier-config"
 }

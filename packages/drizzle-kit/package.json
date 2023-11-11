@@ -1,5 +1,5 @@
 {
-  "name": "@acme/drizzle-kit",
+  "name": "@menus-for-ucla/drizzle-kit",
   "private": true,
   "version": "0.1.0",
   "exports": {
@@ -20,16 +20,16 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@menus-for-ucla/eslint-config": "workspace:^0.2.0",
+    "@menus-for-ucla/prettier-config": "workspace:^0.1.0",
+    "@menus-for-ucla/tsconfig": "workspace:^0.1.0",
     "eslint": "^8.53.0",
     "typescript": "^5.2.2"
   },
   "eslintConfig": {
     "extends": [
-      "@acme/eslint-config/base"
+      "@menus-for-ucla/eslint-config/base"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@menus-for-ucla/prettier-config"
 }
