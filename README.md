@@ -12,13 +12,13 @@ apps
   ├─ auth-proxy
   |   ├─ Nitro server to proxy OAuth requests in preview deployments
   |   └─ Uses Auth.js Core
-  ├─ expo
+  ├─ expo (iOS and Android application)
   |   ├─ Expo SDK 49
   |   ├─ React Native using React 18
   |   ├─ Navigation using Expo Router
   |   ├─ Tailwind using Nativewind
   |   └─ Typesafe API calls using tRPC
-  └─ next.js
+  └─ next.js (Website + API Server & Client)
       ├─ Next.js 14
       ├─ React 18
       ├─ Tailwind CSS
