@@ -1,29 +1,25 @@
 import requests
-import re
 from datetime import datetime
 from bs4 import BeautifulSoup
 
 
-# get dining hall data
+# get dining hall data from either website or test html
+
 # for testing with dining website
-#hoursURL = "http://menu.dining.ucla.edu/Hours"
-#page = requests.get(hoursURL)
-#soup = BeautifulSoup(page.text, 'html.parser')
+hoursURL = "http://menu.dining.ucla.edu/Hours"
+page = requests.get(hoursURL)
+soup = BeautifulSoup(page.text, 'html.parser')
 
 # for testing with HTML file
-with open('study-example.html') as file:
-    html=file.read()
+#with open('study-example.html') as file:
+ #   html=file.read()
+#soup = BeautifulSoup(html, 'html.parser')
 
 
-# parse dining hall data with beautifulsoup library
-soup = BeautifulSoup(html, 'html.parser')
+#parse dining hall data with beautifulsoup library
+activity_data = [] # initialize data list, which will contain tuples for each dining location with an activity-level indicator
 
-table = soup.find('table', {'class': 'hours-table'}) # find table with rows of dining data
-#print(table)
-
-activity_data = []
-
-rows = table.find_all('tr') # each row is for a specific dining location
+rows = soup.find('table', {'class': 'hours-table'}).find_all('tr') # find table with rows of dining data, where each row is for a specific dining location
 for row in rows:
     name = row.find('span', {'class':'hours-location'}) # name of row
     time = row.find('span', {'class':'activity-level-box'}) # attempt to find span with activity-level data
@@ -36,9 +32,7 @@ for row in rows:
 
 
 # get current time
-current_time = datetime.now()
-current_time_str = current_time.strftime("%Y-%m-%d-%H-%M")
-print(current_time_str)
+current_time_str = datetime.now().strftime("%Y-%m-%d-%H-%M")
 
 # save parsed data to file as JSON
 data_file=open(current_time_str+".json", "w")
@@ -49,3 +43,5 @@ for data in activity_data[:-1]:
 data_file.write("{\"name\":\"%s\", \"percentage\":\"%d\"}\n" % activity_data[-1])
 data_file.write("]")
 data_file.close()
+
+print("Dining Activity Level data successfully parsed for time: ", current_time_str) # print success message
