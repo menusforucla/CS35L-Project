@@ -19,12 +19,13 @@ soup = BeautifulSoup(page.text, 'html.parser')
 #parse dining hall data with beautifulsoup library
 activity_data = [] # initialize data list, which will contain tuples for each dining location with an activity-level indicator
 
-rows = soup.find('table', {'class': 'hours-table'}).find_all('tr') # find table with rows of dining data, where each row is for a specific dining location
-for row in rows:
+# find table with rows of dining data, where each row is for a specific dining location
+# then parse each row
+for row in soup.find('table', {'class': 'hours-table'}).find_all('tr'):
     name = row.find('span', {'class':'hours-location'}) # name of row
     time = row.find('span', {'class':'activity-level-box'}) # attempt to find span with activity-level data
     if time is not None: # if span exists, extract and save data
-        activity_level = (name.text, int(time.text.strip()[:-1])) # str, inavailable for timet
+        activity_level = (name.text, int(time.text.strip()[:-1])) # str, int (format and remove percent sign)
         activity_data.append(activity_level)
 
 #for data in activity_data: # print collected activity data
