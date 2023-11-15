@@ -11,7 +11,7 @@ page = requests.get(hoursURL)
 soup = BeautifulSoup(page.text, 'html.parser')
 
 # for testing with HTML file
-#with open('study-example.html') as file:
+#with open('activity-data/study-example.html') as file:
  #   html=file.read()
 #soup = BeautifulSoup(html, 'html.parser')
 
@@ -19,28 +19,31 @@ soup = BeautifulSoup(page.text, 'html.parser')
 #parse dining hall data with beautifulsoup library
 activity_data = [] # initialize data list, which will contain tuples for each dining location with an activity-level indicator
 
-rows = soup.find('table', {'class': 'hours-table'}).find_all('tr') # find table with rows of dining data, where each row is for a specific dining location
-for row in rows:
+# find table with rows of dining data, where each row is for a specific dining location
+# then parse each row
+for row in soup.find('table', {'class': 'hours-table'}).find_all('tr'):
     name = row.find('span', {'class':'hours-location'}) # name of row
     time = row.find('span', {'class':'activity-level-box'}) # attempt to find span with activity-level data
     if time is not None: # if span exists, extract and save data
-        activity_level = (name.text, int(time.text.strip()[:-1])) # str, int
+        activity_level = (name.text, int(time.text.strip()[:-1])) # str, int (format and remove percent sign)
         activity_data.append(activity_level)
 
 #for data in activity_data: # print collected activity data
-#    print(data) # str, int, datetime.datetime
+ #   print(data) # str, int, datetime.datetime
 
 
 # get current time
 current_time_str = datetime.now().strftime("%Y-%m-%d-%H-%M")
 
 # save parsed data to file as JSON
-data_file=open(current_time_str+".json", "w")
+data_file=open("activity-data/" + current_time_str + ".json", "w")
 data_file.write("[\n")
 for data in activity_data[:-1]:
     data_file.write("{\"name\":\"%s\", \"percentage\":\"%d\"},\n" % data)
-
-data_file.write("{\"name\":\"%s\", \"percentage\":\"%d\"}\n" % activity_data[-1])
+if (len(activity_data) != 0):
+    data_file.write("{\"name\":\"%s\", \"percentage\":\"%d\"}\n" % activity_data[-1])
+else:
+    print("No Dining Activity Level data currently available")
 data_file.write("]")
 data_file.close()
 
