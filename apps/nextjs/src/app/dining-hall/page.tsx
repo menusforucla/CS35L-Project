@@ -1,9 +1,22 @@
 'use client'
 import React, { useState, FormEvent } from 'react';
-import { set } from 'zod';
+import Link from 'next/link';
 
+interface FoodItemsProps {
+    name: string;
+}
 
-export default function DiningHall({ searchParams}: {
+const FoodItem: React.FC<FoodItemsProps> = ({ name }) => {
+    return (
+        <li>
+            <Link href={{pathname: "/dining-hall/food-item", query: {name: name}}}>
+                {name}
+            </Link>
+        </li>
+    );
+}
+
+export default function DiningHall({ searchParams }: {
     searchParams: {
         title: string;
     };
@@ -26,9 +39,9 @@ export default function DiningHall({ searchParams}: {
         <h1 className="text-3xl font-bold">{searchParams.title}</h1>
         <h2 className="text-xl font-bold">Menu</h2>
         <ul>
-            <li>Krabby Patty</li>
-            <li>Krusty Krab Pizza</li>
-            <li>Kelp Shake</li>
+            <FoodItem name="Krabby Patty" />
+            <FoodItem name="Krusty Krab Pizza" />
+            <FoodItem name="Kelp Shake" />
         </ul>
         <div className="w-100 h-72 relative items-center justify-center mx-auto">
             <h2 className="text-xl font-bold">Reviews</h2>

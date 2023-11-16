@@ -8,6 +8,7 @@ import {
 
 import Image from "next/image";
 import Link from 'next/link';
+
 interface DiningHallProps {
   title: string;
   imageUrl: string;
