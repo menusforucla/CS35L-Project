@@ -1,5 +1,6 @@
 'use client'
 import Image from "next/image";
+import ReactStars from 'react-stars'
 import React, { useState, FormEvent } from 'react';
 export default function FoodItem({ searchParams }: {
     searchParams: {
@@ -31,6 +32,7 @@ export default function FoodItem({ searchParams }: {
             </div>  
             <p>Description: --TOP SECRET--</p>
             <div className="w-100 h-72 relative items-center justify-center mx-auto">
+                <ReactStars />
                 <h2 className="text-xl font-bold">Reviews</h2>
                 <form onSubmit={handleSubmit}>
                     <textarea value={review} placeholder="Write your review!" onChange={handleReviewChange}/>
