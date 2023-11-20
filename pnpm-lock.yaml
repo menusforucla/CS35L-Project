@@ -399,24 +399,6 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  packages/react-stars:
-    devDependencies:
-      '@menus-for-ucla/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../../tooling/eslint
-      '@menus-for-ucla/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/prettier
-      '@menus-for-ucla/tsconfig':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/typescript
-      eslint:
-        specifier: ^8.53.0
-        version: 8.53.0
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-
   tooling/eslint:
     dependencies:
       '@next/eslint-plugin-next':
