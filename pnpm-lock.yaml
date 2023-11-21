@@ -205,6 +205,9 @@ importers:
       '@trpc/server':
         specifier: next
         version: 11.0.0-alpha-next-2023-11-11-17-32-01.100
+      '@types/react-stars':
+        specifier: ^2.2.4
+        version: 2.2.4
       next:
         specifier: ^14.0.2
         version: 14.0.2(react-dom@18.2.0)(react@18.2.0)
@@ -214,9 +217,9 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
-      react-stars:
-        specifier: ^2.2.5
-        version: 2.2.5
+      react-images-uploading:
+        specifier: ^3.1.7
+        version: 3.1.7(react-dom@18.2.0)(react@18.2.0)
       superjson:
         specifier: 2.2.0
         version: 2.2.0
@@ -4318,7 +4321,6 @@ packages:
 
   /@types/prop-types@15.7.10:
     resolution: {integrity: sha512-mxSnDQxPqsZxmeShFH+uwQ4kO4gcJcGahjjMFeLbKE95IAZiiZyiEepGZjtXJ7hN/yfu0bu9xN2ajcU0JcxX6A==}
-    dev: true
 
   /@types/qs@6.9.10:
     resolution: {integrity: sha512-3Gnx08Ns1sEoCrWssEgTSJs/rsT2vhGP+Ja9cnnk9k4ALxinORlQneLXFeFKOTJMOeZUFD1s7w+w2AphTpvzZw==}
@@ -4330,13 +4332,18 @@ packages:
       '@types/react': 18.2.37
     dev: true
 
+  /@types/react-stars@2.2.4:
+    resolution: {integrity: sha512-7wZNmH28ZeDSkesOmpvenLOLJ3StRdHzAbbs+ZkLEOx75Qe8vUWl+qCGnJHdKr+HCF/BSZPvw7LF96Fl+fTUSw==}
+    dependencies:
+      '@types/react': 18.2.37
+    dev: false
+
   /@types/react@18.2.37:
     resolution: {integrity: sha512-RGAYMi2bhRgEXT3f4B92WTohopH6bIXw05FuGlmJEnv/omEn190+QYEIYxIAuIBdKgboYYdVved2p1AxZVQnaw==}
     dependencies:
       '@types/prop-types': 15.7.10
       '@types/scheduler': 0.16.6
       csstype: 3.1.2
-    dev: true
 
   /@types/resolve@1.20.2:
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
@@ -4344,7 +4351,6 @@ packages:
 
   /@types/scheduler@0.16.6:
     resolution: {integrity: sha512-Vlktnchmkylvc9SnwwwozTv04L/e1NykF5vgoQ0XTmI8DD+wxfjQuHuvHS3p0r2jz2x2ghPs2h1FVeDirIteWA==}
-    dev: true
 
   /@types/semver@7.5.5:
     resolution: {integrity: sha512-+d+WYC1BxJ6yVOgUgzK8gWvp5qF8ssV5r4nsDcZWKRWcDQLQ619tvWAxJQYGgBrO1MnLJC7a5GtiYsAoQ47dJg==}
@@ -5850,7 +5856,6 @@ packages:
 
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
-    dev: true
 
   /d@1.0.1:
     resolution: {integrity: sha512-m62ShEObQ39CfralilEQRjH6oAMtNCV1xJyEx5LpRYUVN+EviphDgUc/F3hnYbADmkiNs67Y+3ylmlG7Lnu+FA==}
@@ -10778,6 +10783,17 @@ packages:
       shallowequal: 1.1.0
     dev: false
 
+  /react-images-uploading@3.1.7(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-woET50eCezm645iIeP4gCoN7HjdR3T64UXC5l53yd+2vHFp+pwABH8Z/aAO5IXDeC1aP6doQ+K738L701zswAw==}
+    engines: {node: '>=8', npm: '>=5'}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -10958,10 +10974,6 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
-    dev: false
-
-  /react-stars@2.2.5:
-    resolution: {integrity: sha512-O//KS6Z9RZnUOU/r+3+wxCzNalVn/wEWIcbAQFRV3dw8WbV+ys/kgcpBPijqTiNpHGrcwZdtb/7wF/UVem20CQ==}
     dev: false
 
   /react@18.2.0:
