@@ -9,22 +9,24 @@
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "push": "drizzle-kit push:mysql",
-    "studio": "drizzle-kit studio",
+    "db:generate": "pnpm with-env prisma generate",
+    "db:push": "pnpm with-env prisma db push --skip-generate",
+    "dev": "pnpm with-env prisma studio --port 5556",
+    "with-env": "dotenv -e ../../.env --",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@planetscale/database": "^1.11.0",
-    "drizzle-orm": "^0.29.0"
+    "@prisma/client": "^5.6.0"
   },
   "devDependencies": {
     "@menus-for-ucla/eslint-config": "workspace:^0.2.0",
     "@menus-for-ucla/prettier-config": "workspace:^0.1.0",
     "@menus-for-ucla/tsconfig": "workspace:^0.1.0",
     "dotenv-cli": "^7.3.0",
-    "drizzle-kit": "^0.20.1",
     "eslint": "^8.53.0",
     "prettier": "^3.0.3",
+    "prisma": "^5.6.0",
     "typescript": "^5.2.2"
   },
   "eslintConfig": {
