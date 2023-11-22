@@ -11,12 +11,6 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Post {
-  id      String @id @default(cuid())
-  title   String
-  content String
-}
-
 // NextAuth.js Models
 // NOTE: When using postgresql, mysql or sqlserver, 
 // uncomment the @db.Text annotations below
@@ -37,6 +31,7 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -45,6 +40,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
@@ -63,4 +60,110 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Restaurant {
+  id                      Int           @id @default(autoincrement())
+  name                    String
+  menuSections            MenuSection[]
+  menuItems               MenuItem[]
+  isResedentialRestaurant Boolean       @default(true)
+}
+
+model MenuSection {
+  id        Int        @id @default(autoincrement())
+  name      String
+  menuItems MenuItem[]
+
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+
+  @@index([restaurantId])
+}
+
+model MenuItem {
+  id                 Int                 @id @default(autoincrement())
+  name               String
+  description        String
+  ingredients        Ingredient[]
+  allergens          Allergen[]
+  carbonFootprint    CarbonFootprint
+  dietaryPreferences DietaryPreference[]
+
+  nutritionFacts   NutritionFacts @relation(fields: [nutritionFactsId], references: [id])
+  nutritionFactsId Int            @unique
+  restaurant       Restaurant     @relation(fields: [restaurantId], references: [id])
+  restaurantId     Int
+  menuSection      MenuSection    @relation(fields: [menuSectionId], references: [id])
+  menuSectionId    Int
+
+  @@index([menuSectionId])
+  @@index([restaurantId])
+  @@index([nutritionFactsId])
+}
+
+model NutritionFacts {
+  id                Int       @id @default(autoincrement())
+  servingSize       String
+  calories          Float
+  totalFat          Float
+  saturatedFat      Float
+  transFat          Float
+  cholesterol       Float
+  sodium            Float
+  totalCarbohydrate Float
+  dietaryFiber      Float
+  sugars            Float
+  protein           Float
+  calcium           Float
+  iron              Float
+  potassium         Float
+  vitaminD          Float
+  MenuItem          MenuItem?
+}
+
+model Ingredient {
+  id   Int @id @default(autoincrement())
+  name String
+
+  menuItems MenuItem[]
+}
+
+enum FoodAllergen {
+  PEANUTS
+  TREE_NUTS
+  WHEAT
+  GLUTEN
+  SOYBEANS
+  SESAME
+  DAIRY
+  EGGS
+  CRUSTACEAN_SHELLFISH
+  FISH
+}
+
+model Allergen {
+  id   Int       @id @default(autoincrement())
+  name FoodAllergen
+
+  menuItems MenuItem[]
+}
+
+enum CarbonFootprint {
+  LOW
+  HIGH
+}
+
+enum DietaryPreferenceEnum {
+  VEGETARIAN
+  VEGAN
+  HALAL
+  PREPARED_WITH_ALCOHOL
+}
+
+model DietaryPreference {
+  id   Int                @id @default(autoincrement())
+  name DietaryPreferenceEnum
+
+  menuItems MenuItem[]
 }
