@@ -64,15 +64,41 @@ model VerificationToken {
 }
 
 model Restaurant {
-  id                      Int                @id @default(autoincrement())
+  id                      Int             @id @default(autoincrement())
   name                    String
   menuSections            MenuSection[]
   menuItems               MenuItem[]
-  isResedentialRestaurant Boolean            @default(true)
+  isResedentialRestaurant Boolean         @default(true)
   reviews                 Review[]
-  activityLevels       ActivityLevel[]
+  activityLevels          ActivityLevel[]
+  hours                   Hours[]
 
   updatedAt DateTime @updatedAt
+}
+
+enum DayOfWeek {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
+model Hours {
+  id             Int         @id @default(autoincrement())
+  dayOfWeek      DayOfWeek
+  breakfastOpen  String?
+  breakfastClose String?
+  lunchOpen      String?
+  lunchClose     String?
+  dinnerOpen     String?
+  dinnerClose    String?
+  Restaurant     Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId   Int?
+
+  @@index([restaurantId])
 }
 
 model MenuSection {
@@ -216,7 +242,7 @@ model Image {
 }
 
 model ActivityLevel {
-  id           Int @id @default(autoincrement())
+  id            Int @id @default(autoincrement())
   activityLevel Int
 
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
