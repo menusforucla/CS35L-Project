@@ -52,6 +52,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  reviews       Review[]
 }
 
 model VerificationToken {
@@ -68,6 +69,9 @@ model Restaurant {
   menuSections            MenuSection[]
   menuItems               MenuItem[]
   isResedentialRestaurant Boolean       @default(true)
+  Review                  Review[]
+
+  lastUpdated DateTime @default(now())
 }
 
 model MenuSection {
@@ -77,6 +81,8 @@ model MenuSection {
 
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId Int
+
+  lastUpdated DateTime @default(now())
 
   @@index([restaurantId])
 }
@@ -96,6 +102,10 @@ model MenuItem {
   restaurantId     Int
   menuSection      MenuSection    @relation(fields: [menuSectionId], references: [id])
   menuSectionId    Int
+  reviews          Review[]
+  images           Image[]
+
+  lastUpdated DateTime @default(now())
 
   @@index([menuSectionId])
   @@index([restaurantId])
@@ -123,7 +133,7 @@ model NutritionFacts {
 }
 
 model Ingredient {
-  id   Int @id @default(autoincrement())
+  id   Int    @id @default(autoincrement())
   name String
 
   menuItems MenuItem[]
@@ -143,7 +153,7 @@ enum FoodAllergen {
 }
 
 model Allergen {
-  id   Int       @id @default(autoincrement())
+  id   Int          @id @default(autoincrement())
   name FoodAllergen
 
   menuItems MenuItem[]
@@ -162,8 +172,44 @@ enum DietaryPreferenceEnum {
 }
 
 model DietaryPreference {
-  id   Int                @id @default(autoincrement())
+  id   Int                   @id @default(autoincrement())
   name DietaryPreferenceEnum
 
   menuItems MenuItem[]
+}
+
+model Review {
+  id     String  @id @default(cuid())
+  rating Int
+  review String?
+  images Image[]
+
+  menuItems    MenuItem[]
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+  imageId Int?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([restaurantId])
+}
+
+model Image {
+  id   Int    @id @default(autoincrement())
+  url  String
+  type String
+
+  review     Review?   @relation(fields: [reviewId], references: [id])
+  reviewId   String?
+  menuItem   MenuItem? @relation(fields: [menuItemId], references: [id])
+  menuItemId Int?
+
+  createdAt DateTime @default(now())
+
+  @@index([reviewId])
+  @@index([menuItemId])
 }
