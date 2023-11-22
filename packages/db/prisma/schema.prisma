@@ -64,14 +64,15 @@ model VerificationToken {
 }
 
 model Restaurant {
-  id                      Int           @id @default(autoincrement())
+  id                      Int                @id @default(autoincrement())
   name                    String
   menuSections            MenuSection[]
   menuItems               MenuItem[]
-  isResedentialRestaurant Boolean       @default(true)
-  Review                  Review[]
+  isResedentialRestaurant Boolean            @default(true)
+  reviews                 Review[]
+  activityLevels       ActivityLevel[]
 
-  lastUpdated DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model MenuSection {
@@ -82,7 +83,7 @@ model MenuSection {
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId Int
 
-  lastUpdated DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([restaurantId])
 }
@@ -105,7 +106,7 @@ model MenuItem {
   reviews          Review[]
   images           Image[]
 
-  lastUpdated DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([menuSectionId])
   @@index([restaurantId])
@@ -212,4 +213,16 @@ model Image {
 
   @@index([reviewId])
   @@index([menuItemId])
+}
+
+model ActivityLevel {
+  id           Int @id @default(autoincrement())
+  activityLevel Int
+
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+
+  time DateTime @default(now())
+
+  @@index([restaurantId])
 }
