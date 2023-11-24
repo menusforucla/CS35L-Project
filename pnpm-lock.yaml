@@ -205,6 +205,9 @@ importers:
       '@trpc/server':
         specifier: next
         version: 11.0.0-alpha-next-2023-11-11-17-32-01.100
+      hono:
+        specifier: ^3.10.2
+        version: 3.10.2
       next:
         specifier: ^14.0.2
         version: 14.0.2(react-dom@18.2.0)(react@18.2.0)
@@ -358,6 +361,9 @@ importers:
       '@prisma/client':
         specifier: ^5.6.0
         version: 5.6.0(prisma@5.6.0)
+      '@prisma/extension-accelerate':
+        specifier: ^0.6.2
+        version: 0.6.2(@prisma/client@5.6.0)
     devDependencies:
       '@menus-for-ucla/eslint-config':
         specifier: workspace:^0.2.0
@@ -3031,6 +3037,15 @@ packages:
   /@prisma/engines@5.6.0:
     resolution: {integrity: sha512-Mt2q+GNJpU2vFn6kif24oRSBQv1KOkYaterQsi0k2/lA+dLvhRX6Lm26gon6PYHwUM8/h8KRgXIUMU0PCLB6bw==}
     requiresBuild: true
+
+  /@prisma/extension-accelerate@0.6.2(@prisma/client@5.6.0):
+    resolution: {integrity: sha512-KIBVPeWt8qaSg7wQ+TXmCVeUDoW75whtXcdS9dbHxRoO2OWFH5I9+qbkHBhx5Wj/h1wQpS8usuxGnsZqiBjUpQ==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      '@prisma/client': '>=4.16.1'
+    dependencies:
+      '@prisma/client': 5.6.0(prisma@5.6.0)
+    dev: false
 
   /@radix-ui/react-compose-refs@1.0.0(react@18.2.0):
     resolution: {integrity: sha512-0KaSv6sx787/hK3eF53iOkiSLwAGlFMx5lotrqD2pTjB18KbybKoEIgkNZTKC60YECDQTKGTRcDBILwZVqVKvA==}
@@ -7015,6 +7030,11 @@ packages:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
     dependencies:
       react-is: 16.13.1
+    dev: false
+
+  /hono@3.10.2:
+    resolution: {integrity: sha512-QwJLjWs3e+nZ3b5nQrrdJpYCJqiTK744jeYhX7yhZdxwcQ3KIohBfzI2dA8gSF6HEZkmFUdiKL1BelJ8utIm4w==}
+    engines: {node: '>=16.0.0'}
     dev: false
 
   /hookable@5.5.3:

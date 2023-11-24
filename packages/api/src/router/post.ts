@@ -14,7 +14,7 @@ export const postRouter = createTRPCRouter({
       return ctx.prisma.post.findFirst({ where: { id: input.id } });
     }),
 
-  create: protectedProcedure
+  create: publicProcedure
     .input(
       z.object({
         title: z.string().min(1),
@@ -22,7 +22,9 @@ export const postRouter = createTRPCRouter({
       }),
     )
     .mutation(({ ctx, input }) => {
-      return ctx.prisma.post.create({ data: input });
+      // return ctx.prisma.post.create({ data: input });
+      console.log(input);
+      return input;
     }),
 
   delete: publicProcedure.input(z.string()).mutation(({ ctx, input }) => {

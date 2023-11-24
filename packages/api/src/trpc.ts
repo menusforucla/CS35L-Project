@@ -24,6 +24,7 @@ import { prisma } from "@menus-for-ucla/db";
  *
  */
 interface CreateContextOptions {
+  headers?: Headers;
   session: Session | null;
 }
 
@@ -38,6 +39,7 @@ interface CreateContextOptions {
  */
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
+    headers: opts.headers,
     session: opts.session,
     prisma,
   };
@@ -52,12 +54,19 @@ export const createTRPCContext = async (opts: {
   req?: Request;
   auth: Session | null;
 }) => {
+  const headers = opts.req?.headers;
   const session = opts.auth ?? (await auth());
   const source = opts.req?.headers.get("x-trpc-source") ?? "unknown";
 
-  console.log(">>> tRPC Request from", source, "by", session?.user);
+  console.log(
+    ">>> tRPC Request from",
+    source,
+    "by",
+    session?.user ?? "internal procedure",
+  );
 
   return createInnerTRPCContext({
+    headers,
     session,
   });
 };
@@ -120,6 +129,21 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   });
 });
 
+const enforceAPIKey = t.middleware(({ ctx, next }) => {
+  if (
+    !ctx.headers ||
+    ctx.headers.get("Authorization") !== process.env.API_KEY
+  ) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session, apiKey: ctx.headers.get("Authorization") },
+    },
+  });
+});
+
 /**
  * Protected (authed) procedure
  *
@@ -130,3 +154,5 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+
+export const internalProcedure = t.procedure.use(enforceAPIKey);

@@ -65,15 +65,16 @@ model VerificationToken {
 
 model Restaurant {
   id                      Int             @id @default(autoincrement())
-  name                    String
+  name                    String          @unique
+  isResidentialRestaurant Boolean         @default(true)
   menuSections            MenuSection[]
-  menuItems               MenuItem[]
-  isResedentialRestaurant Boolean         @default(true)
   reviews                 Review[]
   activityLevels          ActivityLevel[]
   hours                   Hours[]
 
   updatedAt DateTime @updatedAt
+
+  @@index([name])
 }
 
 enum DayOfWeek {
@@ -111,6 +112,7 @@ model MenuSection {
 
   updatedAt DateTime @updatedAt
 
+  @@unique([name, restaurantId], name: "menuSectionIdentifier")
   @@index([restaurantId])
 }
 
@@ -118,52 +120,43 @@ model MenuItem {
   id                 Int                 @id @default(autoincrement())
   name               String
   description        String
-  ingredients        Ingredient[]
+  ingredients        String
   allergens          Allergen[]
   carbonFootprint    CarbonFootprint
   dietaryPreferences DietaryPreference[]
 
-  nutritionFacts   NutritionFacts @relation(fields: [nutritionFactsId], references: [id])
-  nutritionFactsId Int            @unique
-  restaurant       Restaurant     @relation(fields: [restaurantId], references: [id])
-  restaurantId     Int
-  menuSection      MenuSection    @relation(fields: [menuSectionId], references: [id])
-  menuSectionId    Int
-  reviews          Review[]
-  images           Image[]
+  nutritionFacts NutritionFacts?
+  menuSection    MenuSection     @relation(fields: [menuSectionId], references: [id])
+  menuSectionId  Int
+  reviews        Review[]
+  images         Image[]
 
   updatedAt DateTime @updatedAt
 
+  @@unique([name, menuSectionId], name: "menuItemIdentifier")
   @@index([menuSectionId])
-  @@index([restaurantId])
-  @@index([nutritionFactsId])
 }
 
 model NutritionFacts {
-  id                Int       @id @default(autoincrement())
+  id                Int    @id @default(autoincrement())
   servingSize       String
-  calories          Float
-  totalFat          Float
-  saturatedFat      Float
-  transFat          Float
-  cholesterol       Float
-  sodium            Float
-  totalCarbohydrate Float
-  dietaryFiber      Float
-  sugars            Float
-  protein           Float
-  calcium           Float
-  iron              Float
-  potassium         Float
-  vitaminD          Float
-  MenuItem          MenuItem?
-}
+  calories          String
+  totalFat          String
+  saturatedFat      String
+  transFat          String
+  cholesterol       String
+  sodium            String
+  totalCarbohydrate String
+  dietaryFiber      String
+  sugars            String
+  protein           String
+  calcium           String
+  iron              String
+  potassium         String
+  vitaminD          String
 
-model Ingredient {
-  id   Int    @id @default(autoincrement())
-  name String
-
-  menuItems MenuItem[]
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+  menuItemId Int      @unique
 }
 
 enum FoodAllergen {
@@ -181,9 +174,11 @@ enum FoodAllergen {
 
 model Allergen {
   id   Int          @id @default(autoincrement())
-  name FoodAllergen
+  name FoodAllergen @unique
 
   menuItems MenuItem[]
+
+  @@index([name])
 }
 
 enum CarbonFootprint {
@@ -200,9 +195,11 @@ enum DietaryPreferenceEnum {
 
 model DietaryPreference {
   id   Int                   @id @default(autoincrement())
-  name DietaryPreferenceEnum
+  name DietaryPreferenceEnum @unique
 
   menuItems MenuItem[]
+
+  @@index([name])
 }
 
 model Review {
