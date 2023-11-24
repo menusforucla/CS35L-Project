@@ -3,13 +3,12 @@ import { validator } from "hono/validator";
 import { handle } from "hono/vercel";
 import { z } from "zod";
 
-import type {
-  PrismaClient} from "@menus-for-ucla/db";
+import type { PrismaClient } from "@menus-for-ucla/db";
 import {
   CarbonFootprint,
   DietaryPreferenceEnum,
   FoodAllergen,
-  prisma
+  prisma,
 } from "@menus-for-ucla/db";
 
 export const runtime = "edge";
@@ -49,13 +48,15 @@ const MenuSectionSchema = z.object({
   menuItems: z.array(MenuItemSchema),
 });
 
-const RestaurantSchema = z.object({
-  name: z.string(),
-  menuSections: z.array(MenuSectionSchema),
-  isResidentialRestaurant: z.boolean(),
-});
+const RestaurantsSchema = z.array(
+  z.object({
+    name: z.string(),
+    menuSections: z.array(MenuSectionSchema),
+    isResidentialRestaurant: z.boolean(),
+  }),
+);
 
-const ActivityLevelSchema = z.array(
+const ActivityLevelsSchema = z.array(
   z.object({
     activityLevel: z.number().min(0).max(100),
     restaurantName: z.string(),
@@ -71,14 +72,14 @@ app.get("/hello", (c) => {
 app.post(
   "/update-activity-level",
   validator("json", (value, c) => {
-    const parsed = ActivityLevelSchema.safeParse(value);
+    const parsed = ActivityLevelsSchema.safeParse(value);
     if (!parsed.success) {
       return c.json(parsed.error);
     }
     return parsed.data;
   }),
   async (c) => {
-    const activityLevels = ActivityLevelSchema.parse(await c.req.json());
+    const activityLevels = ActivityLevelsSchema.parse(await c.req.json());
 
     const restaurantNames = activityLevels.map((al) => al.restaurantName);
 
@@ -114,66 +115,67 @@ app.post(
 app.post(
   "/update-restaurants",
   validator("json", (value, c) => {
-    const parsed = RestaurantSchema.safeParse(value);
+    const parsed = RestaurantsSchema.safeParse(value);
     if (!parsed.success) {
       return c.json(parsed.error);
     }
     return parsed.data;
   }),
   async (c) => {
-    const restaurantBody = RestaurantSchema.parse(await c.req.json());
-    const restaurant = await prisma.restaurant.upsert({
-      where: { name: restaurantBody.name },
-      update: {
-        isResidentialRestaurant: restaurantBody.isResidentialRestaurant,
-      },
-      create: {
-        name: restaurantBody.name,
-        isResidentialRestaurant: restaurantBody.isResidentialRestaurant,
-      },
-    });
-
-    await prisma.menuSection.deleteMany({
-      where: {
-        restaurantId: restaurant.id,
-        name: {
-          notIn: restaurantBody.menuSections.map((section) => section.name),
+    const restaurantsBody = RestaurantsSchema.parse(await c.req.json());
+    for (const restaurantBody of restaurantsBody) {
+      const restaurant = await prisma.restaurant.upsert({
+        where: { name: restaurantBody.name },
+        update: {
+          isResidentialRestaurant: restaurantBody.isResidentialRestaurant,
         },
-      },
-    });
-
-    for (const section of restaurantBody.menuSections) {
-      const menuSection = await prisma.menuSection.upsert({
-        where: {
-          menuSectionIdentifier: {
-            name: section.name,
-            restaurantId: restaurant.id,
-          },
-        },
-        update: {},
         create: {
-          name: section.name,
-          restaurant: { connect: { id: restaurant.id } },
-          menuItems: { create: [] },
+          name: restaurantBody.name,
+          isResidentialRestaurant: restaurantBody.isResidentialRestaurant,
         },
       });
 
-      for (const item of section.menuItems) {
-        const allergenIds = await getAllergenIds(item.allergens);
-        const dietaryPreferenceIds = await getDietaryPreferenceIds(
-          item.dietaryPreferences,
-        );
+      await prisma.menuSection.deleteMany({
+        where: {
+          restaurantId: restaurant.id,
+          name: {
+            notIn: restaurantBody.menuSections.map((section) => section.name),
+          },
+        },
+      });
 
-        await upsertMenuItem(
-          item,
-          menuSection.id,
-          allergenIds,
-          dietaryPreferenceIds,
-        );
+      for (const section of restaurantBody.menuSections) {
+        const menuSection = await prisma.menuSection.upsert({
+          where: {
+            menuSectionIdentifier: {
+              name: section.name,
+              restaurantId: restaurant.id,
+            },
+          },
+          update: {},
+          create: {
+            name: section.name,
+            restaurant: { connect: { id: restaurant.id } },
+            menuItems: { create: [] },
+          },
+        });
+
+        for (const item of section.menuItems) {
+          const allergenIds = await getAllergenIds(item.allergens);
+          const dietaryPreferenceIds = await getDietaryPreferenceIds(
+            item.dietaryPreferences,
+          );
+
+          await upsertMenuItem(
+            item,
+            menuSection.id,
+            allergenIds,
+            dietaryPreferenceIds,
+          );
+        }
       }
     }
-
-    return c.json(restaurant);
+    return c.json({ success: true });
   },
 );
 
