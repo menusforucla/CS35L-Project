@@ -3,11 +3,13 @@ import { validator } from "hono/validator";
 import { handle } from "hono/vercel";
 import { z } from "zod";
 
+import type {
+  PrismaClient} from "@menus-for-ucla/db";
 import {
   CarbonFootprint,
   DietaryPreferenceEnum,
   FoodAllergen,
-  prisma,
+  prisma
 } from "@menus-for-ucla/db";
 
 export const runtime = "edge";
@@ -53,11 +55,61 @@ const RestaurantSchema = z.object({
   isResidentialRestaurant: z.boolean(),
 });
 
+const ActivityLevelSchema = z.array(
+  z.object({
+    activityLevel: z.number().min(0).max(100),
+    restaurantName: z.string(),
+  }),
+);
+
 app.get("/hello", (c) => {
   return c.json({
     message: "Hello Next.js!",
   });
 });
+
+app.post(
+  "/update-activity-level",
+  validator("json", (value, c) => {
+    const parsed = ActivityLevelSchema.safeParse(value);
+    if (!parsed.success) {
+      return c.json(parsed.error);
+    }
+    return parsed.data;
+  }),
+  async (c) => {
+    const activityLevels = ActivityLevelSchema.parse(await c.req.json());
+
+    const restaurantNames = activityLevels.map((al) => al.restaurantName);
+
+    const restaurants = await (prisma as PrismaClient).restaurant.findMany({
+      where: { name: { in: restaurantNames } },
+    });
+
+    const restaurantByName = Object.fromEntries(
+      restaurants.map((restaurant) => [restaurant.name, restaurant]),
+    );
+
+    for (const activityLevel of activityLevels) {
+      const restaurant = restaurantByName[activityLevel.restaurantName];
+
+      if (!restaurant) {
+        return c.json({
+          error: `Restaurant ${activityLevel.restaurantName} not found`,
+        });
+      }
+
+      await prisma.activityLevel.create({
+        data: {
+          activityLevel: activityLevel.activityLevel,
+          restaurant: { connect: { id: restaurant.id } },
+        },
+      });
+    }
+
+    return c.json(activityLevels);
+  },
+);
 
 app.post(
   "/update-restaurants",
