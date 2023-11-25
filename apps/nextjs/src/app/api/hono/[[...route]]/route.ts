@@ -100,6 +100,11 @@ app.post(
         });
       }
 
+      await prisma.restaurant.update({
+        where: { id: restaurant.id },
+        data: { currentActivityLevel: activityLevel.activityLevel },
+      });
+
       await prisma.activityLevel.create({
         data: {
           activityLevel: activityLevel.activityLevel,
@@ -132,6 +137,7 @@ app.post(
         create: {
           name: restaurantBody.name,
           isResidentialRestaurant: restaurantBody.isResidentialRestaurant,
+          currentActivityLevel: 0,
         },
       });
 

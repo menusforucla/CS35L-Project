@@ -12,6 +12,7 @@
     "postinstall": "pnpm lint:ws",
     "db:generate": "turbo db:generate",
     "db:push": "turbo db:push db:generate",
+    "db:push-force": "turbo db:push-force db:generate",
     "db:studio": "turbo db:studio",
     "dev": "turbo dev --parallel",
     "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache'",
