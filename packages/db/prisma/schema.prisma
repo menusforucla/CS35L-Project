@@ -214,9 +214,8 @@ model Review {
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId Int
 
-  user    User   @relation(fields: [userId], references: [id])
-  userId  String
-  imageId Int?
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 
   createdAt DateTime @default(now())
 
