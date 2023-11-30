@@ -34,5 +34,8 @@
       "@auth/core": "0.18.0"
     }
   },
-  "prettier": "@menus-for-ucla/prettier-config"
+  "prettier": "@menus-for-ucla/prettier-config",
+  "dependencies": {
+    "react-images-uploading": "^3.1.7"
+  }
 }

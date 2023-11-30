@@ -4,6 +4,7 @@
 import React, { FormEvent, ReactNode, useState } from "react";
 import Image from "next/image";
 import ImageUploading, { ImageListType } from "react-images-uploading";
+import {CreateReviewForm } from "../../_components/reviews"
 
 interface ImageUploaderProps {
   images: ImageListType;
@@ -101,6 +102,7 @@ export default function FoodItem({
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     setReview(event.target.value);
+    
   };
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -121,15 +123,7 @@ export default function FoodItem({
       <p>Description: --TOP SECRET--</p>
       <div className="w-100 relative mx-auto h-72 items-center justify-center">
         <h2 className="text-xl font-bold">Reviews</h2>
-        <form onSubmit={handleSubmit}>
-          <textarea
-            value={review}
-            placeholder="Write your review!"
-            onChange={handleReviewChange}
-          />
-          <button type="submit">Submit</button>
-        </form>
-        {submittedReview && <p>{submittedReview}</p>}
+        <CreateReviewForm></CreateReviewForm>
       </div>
     </div>
   );
