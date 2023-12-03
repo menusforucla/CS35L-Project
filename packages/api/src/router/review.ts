@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import type { PrismaClient } from "@menus-for-ucla/db";
 
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 const ImageSchema = z.object({
   url: z.string(),
@@ -36,4 +36,12 @@ export const reviewRouter = createTRPCRouter({
     });
   }),
 
+  byRestId: publicProcedure
+    .input(z.number())
+    .query(({ ctx, input }) => {
+      const prisma = ctx.prisma as PrismaClient;
+      return prisma.review.findMany({
+        where: { restaurantId: input }
+      });
+    }),
 });

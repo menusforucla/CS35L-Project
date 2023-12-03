@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
 import { api } from "~/utils/api";
-import type { RouterOutputs } from "~/utils/api";
 
 export function CreateReviewForm() {
   const context = api.useContext();
@@ -47,11 +45,12 @@ export function CreateReviewForm() {
   );
 }
 
-/*
-export function PostList() {
-  const [posts] = api.post.all.useSuspenseQuery();
 
-  if (posts.length === 0) {
+export function PostList(props: {restaurantId: number}) {
+  const reviews = api.review.byRestId.useQuery(props.restaurantId).data
+  if(!reviews) return;
+  if (!(reviews instanceof Array)) return;
+  if (reviews.length === 0) {
     return (
       <div className="relative flex w-full flex-col gap-4">
         <PostCardSkeleton pulse={false} />
@@ -67,32 +66,27 @@ export function PostList() {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      {posts.map((p) => {
-        return <PostCard key={p.id} post={p} />;
+      {reviews.map((p) => {
+        return <PostCard key={p.review} review={p.review}  />;
       })}
     </div>
   );
 }
 
-export function PostCard(props: {
-  post: RouterOutputs["post"]["all"][number];
-}) {
-  const context = api.useContext();
-  const deletePost = api.post.delete.useMutation();
+export function PostCard(props: {review: string | null}) {
+  // const context = api.useContext();
+  // const deletePost = api.review.delete.useMutation();
 
   return (
-    <div className="flex flex-row rounded-lg bg-white/10 p-4 transition-all hover:scale-[101%]">
+    <div className="flex flex-row rounded-lg bg-white/10 p-4 transition-all hover:scale-[101%] w-80 flex-center">
       <div className="flex-grow">
-        <h2 className="text-2xl font-bold text-pink-400">{props.post.title}</h2>
-        <p className="mt-2 text-sm">{props.post.content}</p>
+        <h2 className="text-2xl font-bold text-pink-400">{"Review"}</h2>
+        <p className="mt-2 text-sm">{props.review}</p>
       </div>
       <div>
         <button
           className="cursor-pointer text-sm font-bold uppercase text-pink-400"
-          onClick={async () => {
-            await deletePost.mutateAsync(props.post.id);
-            await context.post.all.invalidate();
-          }}
+          onClick={ () => { console.log("delete")}}
         >
           Delete
         </button>
@@ -124,4 +118,3 @@ export function PostCardSkeleton(props: { pulse?: boolean }) {
     </div>
   );
 }
-*/

@@ -3,7 +3,7 @@
 import React, { FormEvent, useState } from "react";
 import Image from "next/image";
 import ImageUploading, { ImageListType } from "react-images-uploading";
-import {CreateReviewForm } from "../../_components/reviews"
+import {CreateReviewForm, PostList } from "../../_components/reviews"
 import { Rating } from 'react-simple-star-rating'
 import { api } from "~/utils/api";
 interface ImageUploaderProps {
@@ -90,7 +90,8 @@ export default function FoodItem({searchParams,}: {
 }) {
   const [review, setReview] = useState("");
   const [submittedReview, setSubmittedReview] = useState("");
-  const [images, setImages] = useState([]);
+  const [images, setImages] = React.useState([]);
+  const maxImages = 5;
   const {data: foodItem, error, isLoading} = api.menuItemRouter.byId.useQuery(Number(searchParams.id));
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
@@ -127,6 +128,7 @@ export default function FoodItem({searchParams,}: {
       <div className="w-100 relative mx-auto h-72 items-center justify-center">
         <h2 className="text-xl font-bold">Reviews</h2>
         <CreateReviewForm></CreateReviewForm>
+        <PostList restaurantId={1}></PostList>
       </div>
     </div>
   );
