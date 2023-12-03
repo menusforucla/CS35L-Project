@@ -1,10 +1,10 @@
 "use client";
 
-//import ReactStars from "react-stars";
-import React, { FormEvent, ReactNode, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import Image from "next/image";
 import ImageUploading, { ImageListType } from "react-images-uploading";
-
+import { Rating } from 'react-simple-star-rating'
+import { api } from "~/utils/api";
 interface ImageUploaderProps {
   images: ImageListType;
   onChange: (
@@ -13,11 +13,7 @@ interface ImageUploaderProps {
   ) => void;
   maxImages: number;
 }
-const ImageUploader: React.FC<ImageUploaderProps> = ({
-  images,
-  onChange,
-  maxImages,
-}) => {
+const ImageUploader: React.FC<ImageUploaderProps> = ({images,onChange,maxImages,}) => {
   return (
     <ImageUploading
       multiple
@@ -85,18 +81,18 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
   );
 };
 
-export default function FoodItem({
-  searchParams,
-}: {
+export default function FoodItem({searchParams,}: {
   searchParams: {
     name: string;
+    id: number;
   };
 }) {
   const [review, setReview] = useState("");
   const [submittedReview, setSubmittedReview] = useState("");
-  const [images, setImages] = React.useState([]);
-  const maxImages = 5;
-
+  const [images, setImages] = useState([]);
+  const {data: foodItem, error, isLoading} = api.menuItemRouter.byId.useQuery(Number(searchParams.id));
+  if (error) return <div>Failed to load</div>;
+  if (isLoading) return <div>Loading...</div>;
   const handleReviewChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
@@ -117,8 +113,15 @@ export default function FoodItem({
   return (
     <div>
       <h1 className="text-3xl font-bold">{searchParams.name}</h1>
-      <ImageUploader images={images} onChange={onChange} maxImages={maxImages}/>
-      <p>Description: --TOP SECRET--</p>
+      <ImageUploader images={images} onChange={onChange} maxImages={5}/>
+      <p><b>INGREDIENTS: </b>{foodItem?.ingredients}</p>
+      <p><b>ALLERGENS: </b>{foodItem?.allergens.map((allergen, index) => (
+        <span key={allergen.id}>{allergen.name}{index < foodItem.allergens.length-1 ? ', ' : ''}</span>
+      ))}</p>
+      <p><b>DIETARY PREFERANCES: </b>{foodItem?.dietaryPreferences.map((dietaryPreference, index) => (
+        <span key={dietaryPreference.id}>{dietaryPreference.name}{index < foodItem.dietaryPreferences.length-1 ? ', ' : ''}</span>
+      ))}</p>
+      <p><b>Description: </b>{foodItem?.description}</p>
       <div className="w-100 relative mx-auto h-72 items-center justify-center">
         <h2 className="text-xl font-bold">Reviews</h2>
         <form onSubmit={handleSubmit}>

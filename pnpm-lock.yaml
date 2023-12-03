@@ -186,7 +186,7 @@ importers:
         version: 0.7.1(typescript@5.2.2)(zod@3.22.4)
       '@tanstack/react-query':
         specifier: ^5.8.1
-        version: 5.8.2(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0)
+        version: 5.8.2(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-query-devtools':
         specifier: ^5.8.1
         version: 5.8.2(@tanstack/react-query@5.8.2)(react-dom@18.2.0)(react@18.2.0)
@@ -3611,7 +3611,7 @@ packages:
       react-dom: ^18.0.0
     dependencies:
       '@tanstack/query-devtools': 5.8.2
-      '@tanstack/react-query': 5.8.2(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0)
+      '@tanstack/react-query': 5.8.2(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
@@ -3624,7 +3624,7 @@ packages:
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
-      '@tanstack/react-query': 5.8.2(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0)
+      '@tanstack/react-query': 5.8.2(react-dom@18.2.0)(react@18.2.0)
       next: 14.0.2(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -3646,6 +3646,23 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-native: 0.72.6(@babel/core@7.23.3)(@babel/preset-env@7.23.3)(react@18.2.0)
+    dev: false
+
+  /@tanstack/react-query@5.8.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-1QGZWaB0Do5CCZ2OEGlacXWeylqN3pTlJPViPqktjViygNtuacbCZWdQEVdD62cYC3ra80YOlKihKmXKKhZwLA==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': 5.8.2
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@tootallnate/quickjs-emscripten@0.23.0:
@@ -3671,7 +3688,7 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@tanstack/react-query': 5.8.2(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0)
+      '@tanstack/react-query': 5.8.2(react-dom@18.2.0)(react@18.2.0)
       '@trpc/client': 11.0.0-alpha-next-2023-11-11-17-32-01.100(@trpc/server@11.0.0-alpha-next-2023-11-11-17-32-01.100)
       '@trpc/react-query': 11.0.0-alpha-next-2023-11-11-17-32-01.100(@tanstack/react-query@5.8.2)(@trpc/client@11.0.0-alpha-next-2023-11-11-17-32-01.100)(@trpc/server@11.0.0-alpha-next-2023-11-11-17-32-01.100)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server': 11.0.0-alpha-next-2023-11-11-17-32-01.100
@@ -3690,7 +3707,7 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@tanstack/react-query': 5.8.2(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0)
+      '@tanstack/react-query': 5.8.2(react-dom@18.2.0)(react@18.2.0)
       '@trpc/client': 11.0.0-alpha-next-2023-11-11-17-32-01.100(@trpc/server@11.0.0-alpha-next-2023-11-11-17-32-01.100)
       '@trpc/server': 11.0.0-alpha-next-2023-11-11-17-32-01.100
       react: 18.2.0
