@@ -3,6 +3,7 @@
 import React, { FormEvent, useState } from "react";
 import Image from "next/image";
 import ImageUploading, { ImageListType } from "react-images-uploading";
+import {CreateReviewForm } from "../../_components/reviews"
 import { Rating } from 'react-simple-star-rating'
 import { api } from "~/utils/api";
 interface ImageUploaderProps {
@@ -97,6 +98,7 @@ export default function FoodItem({searchParams,}: {
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     setReview(event.target.value);
+    
   };
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -124,15 +126,7 @@ export default function FoodItem({searchParams,}: {
       <p><b>Description: </b>{foodItem?.description}</p>
       <div className="w-100 relative mx-auto h-72 items-center justify-center">
         <h2 className="text-xl font-bold">Reviews</h2>
-        <form onSubmit={handleSubmit}>
-          <textarea
-            value={review}
-            placeholder="Write your review!"
-            onChange={handleReviewChange}
-          />
-          <button type="submit">Submit</button>
-        </form>
-        {submittedReview && <p>{submittedReview}</p>}
+        <CreateReviewForm></CreateReviewForm>
       </div>
     </div>
   );
