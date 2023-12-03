@@ -28,7 +28,10 @@
     "next": "^14.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-images-uploading": "^3.1.7",
+    "react-simple-star-rating": "^5.1.7",
     "superjson": "2.2.0",
+    "swr": "^2.2.4",
     "zod": "^3.22.2"
   },
   "devDependencies": {
@@ -39,7 +42,6 @@
     "@types/node": "^18.18.9",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
-    "@types/react-stars": "^2.2.4",
     "dotenv-cli": "^7.3.0",
     "eslint": "^8.53.0",
     "prettier": "^3.0.3",

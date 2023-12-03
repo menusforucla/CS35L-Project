@@ -217,9 +217,18 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
+      react-images-uploading:
+        specifier: ^3.1.7
+        version: 3.1.7(react-dom@18.2.0)(react@18.2.0)
+      react-simple-star-rating:
+        specifier: ^5.1.7
+        version: 5.1.7(react-dom@18.2.0)(react@18.2.0)
       superjson:
         specifier: 2.2.0
         version: 2.2.0
+      swr:
+        specifier: ^2.2.4
+        version: 2.2.4(react@18.2.0)
       zod:
         specifier: ^3.22.2
         version: 3.22.4
@@ -245,9 +254,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.15
         version: 18.2.15
-      '@types/react-stars':
-        specifier: ^2.2.4
-        version: 2.2.4
       dotenv-cli:
         specifier: ^7.3.0
         version: 7.3.0
@@ -386,24 +392,6 @@ importers:
       prisma:
         specifier: ^5.6.0
         version: 5.6.0
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-
-  packages/drizzle-kit:
-    devDependencies:
-      '@menus-for-ucla/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../../tooling/eslint
-      '@menus-for-ucla/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/prettier
-      '@menus-for-ucla/tsconfig':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/typescript
-      eslint:
-        specifier: ^8.53.0
-        version: 8.53.0
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -3877,12 +3865,6 @@ packages:
 
   /@types/react-dom@18.2.15:
     resolution: {integrity: sha512-HWMdW+7r7MR5+PZqJF6YFNSCtjz1T0dsvo/f1BV6HkV+6erD/nA7wd9NM00KVG83zf2nJ7uATPO9ttdIPvi3gg==}
-    dependencies:
-      '@types/react': 18.2.37
-    dev: true
-
-  /@types/react-stars@2.2.4:
-    resolution: {integrity: sha512-7wZNmH28ZeDSkesOmpvenLOLJ3StRdHzAbbs+ZkLEOx75Qe8vUWl+qCGnJHdKr+HCF/BSZPvw7LF96Fl+fTUSw==}
     dependencies:
       '@types/react': 18.2.37
     dev: true
@@ -9970,6 +9952,17 @@ packages:
       shallowequal: 1.1.0
     dev: false
 
+  /react-images-uploading@3.1.7(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-woET50eCezm645iIeP4gCoN7HjdR3T64UXC5l53yd+2vHFp+pwABH8Z/aAO5IXDeC1aP6doQ+K738L701zswAw==}
+    engines: {node: '>=8', npm: '>=5'}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -10142,6 +10135,17 @@ packages:
       object-assign: 4.1.1
       react: 18.2.0
       react-is: 18.2.0
+    dev: false
+
+  /react-simple-star-rating@5.1.7(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-NTFkW8W3uwvI82Fv7JW5i7gmDjEZKxJmj+Z9vn+BjYIXT6ILdnU9qnSUP2cWrWN/WAUlue81f9SgM4CQcenltQ==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-ssr-prepass@1.5.0(react@18.2.0):
@@ -11083,6 +11087,16 @@ packages:
       lower-case: 1.1.4
       upper-case: 1.1.3
     dev: true
+
+  /swr@2.2.4(react@18.2.0):
+    resolution: {integrity: sha512-njiZ/4RiIhoOlAaLYDqwz5qH/KZXVilRLvomrx83HjzCWTfa+InyfAjv05PSFxnmLzZkNO9ZfvgoqzAaEI4sGQ==}
+    peerDependencies:
+      react: ^16.11.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      client-only: 0.0.1
+      react: 18.2.0
+      use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false
 
   /tailwindcss@3.3.5:
     resolution: {integrity: sha512-5SEZU4J7pxZgSkv7FP1zY8i2TIAOooNZ1e/OGtxIEv6GltpoiXUqWvLy89+a10qYTB1N5Ifkuw9lqQkN9sscvA==}

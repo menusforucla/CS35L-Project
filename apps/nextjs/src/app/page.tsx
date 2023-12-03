@@ -1,11 +1,7 @@
-import { Suspense } from "react";
+'use client'
 import { AuthShowcase } from "./_components/auth-showcase";
-import {
-  CreatePostForm,
-  PostCardSkeleton,
-  PostList,
-} from "./_components/posts";
 
+import { api } from "~/utils/api";
 import Image from "next/image";
 import Link from 'next/link';
 
@@ -13,10 +9,11 @@ interface DiningHallProps {
   title: string;
   imageUrl: string;
   availability: number;
+  id: number;
 }
-const DiningHall: React.FC<DiningHallProps> = ({title, imageUrl, availability}) => {
+const DiningHall: React.FC<DiningHallProps> = ({title, imageUrl, availability, id}) => {
   return(
-    <Link href={{pathname: "/dining-hall", query: {title: title}}}>
+    <Link href={{pathname: "/dining-hall", query: {title: title, id:id}}}>
       <div className="w-full h-full rounded overflow-hidden shadow-lg text-center bg-white p-10">
         <h1 className="text-5xl font-bold mb-2">{title}</h1>
         <div className="w-100 h-72 relative items-center justify-center mx-auto">
@@ -35,35 +32,27 @@ const DiningHall: React.FC<DiningHallProps> = ({title, imageUrl, availability}) 
 
 
 export default function HomePage() {
+  const { data: restaurants, error, isLoading } = api.restaurant.all.useQuery();
+  if (error) return <div>Failed to load</div>;
+  if (isLoading) return <div>Loading...</div>;
+
   return (
     <main className="flex h-screen flex-col items-center text-black">
       <div className="container mt-12 flex flex-col items-center justify-center gap-4 py-8">
         <h1 className="text-5xl font-normal tracking-tight sm:text-[5rem]">
           Menus for UCLA
         </h1>
-        <AuthShowcase />
-
         <div className="flex w-full justify-around">
-          <DiningHall title="Krusty Krab" imageUrl="/images/KrustyKrab.webp" availability={100}/>
-          <DiningHall title="Krusty Krab 2" imageUrl="/images/KrustyKrab2.webp" availability={20}/>
-          <DiningHall title="Chum Bucket" imageUrl="/images/ChumBucket.webp" availability={0}/>
-
+           {restaurants?.map((restaurant, index: number) => 
+              (<DiningHall
+                key={index} 
+                title={restaurant.name} 
+                imageUrl="/images/KrustyKrab.webp" 
+                availability={restaurant.currentActivityLevel} 
+                id={restaurant.id}/>)
+          )}
         </div>
-        {/* <CreatePostForm /> */}
-        {/* <div className="h-[40vh] w-full max-w-2xl overflow-y-scroll">
-          <Suspense
-            fallback={
-              <div className="flex w-full flex-col gap-4">
-                <PostCardSkeleton />
-                <PostCardSkeleton />
-                <PostCardSkeleton />
-              </div>
-            }
-          ></Suspense>
-        </div> */}
       </div>
     </main>
   );
 }
-
-
