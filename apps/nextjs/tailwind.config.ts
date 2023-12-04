@@ -1,7 +1,9 @@
-import baseConfig from "@menus-for-ucla/tailwind-config";
 import type { Config } from "tailwindcss";
+import { withUt } from "uploadthing/tw";
 
-export default {
-  content: ["./src/**/*.{ts,tsx}"],
+import baseConfig from "@menus-for-ucla/tailwind-config";
+
+export default withUt({
+  content: ["./src/**/*.{ts,tsx,mdx}"],
   presets: [baseConfig],
-} satisfies Config;
+}) satisfies Config;

@@ -1,6 +1,4 @@
 'use client'
-import { AuthShowcase } from "./_components/auth-showcase";
-
 import { api } from "~/utils/api";
 import Image from "next/image";
 import Link from 'next/link';

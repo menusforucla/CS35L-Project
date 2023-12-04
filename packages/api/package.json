@@ -17,6 +17,7 @@
     "@trpc/client": "next",
     "@trpc/server": "next",
     "superjson": "2.2.0",
+    "uploadthing": "^6.0.3",
     "zod": "^3.22.2"
   },
   "devDependencies": {

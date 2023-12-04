@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import type { PrismaClient } from "@menus-for-ucla/db";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const menuItemRouter = createTRPCRouter({
   byId: publicProcedure.input(z.number()).query(({ ctx, input }) => {

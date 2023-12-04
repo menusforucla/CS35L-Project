@@ -10,17 +10,15 @@ export const restaurantRouter = createTRPCRouter({
     return prisma.restaurant.findMany({ orderBy: { id: "desc" } });
   }),
 
-  byId: publicProcedure
-    .input(z.number())
-    .query(({ ctx, input }) => {
-      const prisma = ctx.prisma as PrismaClient;
-      return prisma.restaurant.findUnique({
-        where: { id: input },
-        include: {
-          menuSections: {
-            include: { menuItems: true },
-          },
+  byId: publicProcedure.input(z.number()).query(({ ctx, input }) => {
+    const prisma = ctx.prisma as PrismaClient;
+    return prisma.restaurant.findUnique({
+      where: { id: input },
+      include: {
+        menuSections: {
+          include: { menuItems: true },
         },
-      });
-    }),
+      },
+    });
+  }),
 });

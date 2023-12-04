@@ -24,6 +24,7 @@
     "@trpc/next": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
+    "@uploadthing/react": "^6.0.2",
     "hono": "^3.10.2",
     "next": "^14.0.2",
     "react": "18.2.0",
