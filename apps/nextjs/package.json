@@ -32,7 +32,7 @@
     "react-simple-star-rating": "^5.1.7",
     "superjson": "2.2.0",
     "swr": "^2.2.4",
-    "zod": "^3.22.2"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@menus-for-ucla/eslint-config": "workspace:^0.2.0",
