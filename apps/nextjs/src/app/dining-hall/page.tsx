@@ -45,11 +45,11 @@ export default function DiningHall({searchParams,}: {
     setReview("");
   };
   return (
-    <div>
-      <h1 className="text-3xl font-bold">{searchParams.title}</h1>
+    <div className="mx-auto w-fit h-auto">
+      <h1 className="mt-20 mb-10 text-3xl font-bold text-center">{searchParams.title}</h1>
       {diningHall?.menuSections.map((menuSection) => (
-        <div key={menuSection.id}>
-          <h2 className="text-xl font-bold">{menuSection.name}</h2>
+        <div key={menuSection.id} className="mb-5">
+          <h2 className="text-xl mb-1 font-bold">{menuSection.name}</h2>
           <ul>
             {menuSection?.menuItems.map((menuItem) => (
                 <FoodItem key={menuItem.id} name={menuItem.name} id={menuItem.id} />
@@ -59,14 +59,14 @@ export default function DiningHall({searchParams,}: {
         </div>
       ))}
       <div className="w-100 relative mx-auto h-72 items-center justify-center">
-        <h2 className="text-xl font-bold">Reviews</h2>
+        <h2 className="text-xl mb-1 font-bold">Reviews</h2>
         <form onSubmit={handleSubmit}>
           <textarea
             value={review}
             placeholder="Write your review!"
             onChange={handleReviewChange}
           />
-          <button type="submit">Submit</button>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2" type="submit">Submit</button>
         </form>
         {submittedReview && <p>{submittedReview}</p>}
       </div>
