@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-import type { PrismaClient } from "@menus-for-ucla/db";
-
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 const ImageSchema = z.object({
@@ -19,8 +17,7 @@ const ReviewSchema = z.object({
 
 export const reviewRouter = createTRPCRouter({
   create: protectedProcedure.input(ReviewSchema).mutation(({ ctx, input }) => {
-    const prisma = ctx.prisma as PrismaClient;
-    return prisma.review.create({
+    return ctx.prisma.review.create({
       data: {
         rating: input.rating,
         review: input.review,
@@ -36,12 +33,15 @@ export const reviewRouter = createTRPCRouter({
     });
   }),
 
-  byRestId: publicProcedure
-    .input(z.number())
-    .query(({ ctx, input }) => {
-      const prisma = ctx.prisma as PrismaClient;
-      return prisma.review.findMany({
-        where: { restaurantId: input }
-      });
-    }),
+  byRestId: publicProcedure.input(z.number()).query(({ ctx, input }) => {
+    return ctx.prisma.review.findMany({
+      where: { restaurantId: input },
+    });
+  }),
+
+  delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
+    return ctx.prisma.review.delete({
+      where: { id: input },
+    });
+  }),
 });
