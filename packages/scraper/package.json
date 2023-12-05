@@ -1,7 +1,9 @@
 {
   "name": "@menus-for-ucla/scraper",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
   "exports": {
     ".": "./index.ts"
   },
@@ -17,7 +19,8 @@
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "start": "ts-node index.ts"
   },
   "devDependencies": {
     "@menus-for-ucla/eslint-config": "workspace:^0.2.0",
@@ -35,7 +38,7 @@
   "dependencies": {
     "@menus-for-ucla/db": "workspace:^0.1.0",
     "axios": "^1.6.2",
-    "cheerio": "^1.0.0-rc.12",
+    "cheerio": "1.0.0-rc.12",
     "zod": "^3.22.4"
   }
 }

@@ -67,7 +67,7 @@ model Restaurant {
   id                      Int             @id @default(autoincrement())
   name                    String          @unique
   isResidentialRestaurant Boolean         @default(true)
-  menuSections            MenuSection[]
+  menuSections            MenuSection[]               
   reviews                 Review[]
   currentActivityLevel    Int
   activityLevels          ActivityLevel[]
@@ -103,13 +103,22 @@ model Hours {
   @@index([restaurantId])
 }
 
+enum MealType {
+  BREAKFAST
+  LUNCH
+  DINNER
+  EXTENDED_BANNER
+}
+
 model MenuSection {
   id        Int        @id @default(autoincrement())
   name      String
   menuItems MenuItem[]
 
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant      @relation(fields: [restaurantId], references: [id])
   restaurantId Int
+
+  mealType  MealType
 
   updatedAt DateTime @updatedAt
 
