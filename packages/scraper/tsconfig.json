@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "allowUnreachableCode": false,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": false,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "types": ["node"],
+    "target": "esnext",
+    "module": "CommonJS",
+  },
+  "include": ["*.ts", "src"],
+  "exclude": ["node_modules"],
+}

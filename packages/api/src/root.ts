@@ -1,4 +1,5 @@
 import { authRouter } from "./router/auth";
+import { imageRouter } from "./router/image";
 import { menuItemRouter } from "./router/menu-item";
 import { restaurantRouter } from "./router/restaurant";
 import { reviewRouter } from "./router/review";
@@ -9,6 +10,7 @@ export const appRouter = createTRPCRouter({
   restaurant: restaurantRouter,
   menuItemRouter: menuItemRouter,
   review: reviewRouter,
+  image: imageRouter,
 });
 
 // export type definition of API

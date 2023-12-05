@@ -103,6 +103,13 @@ model Hours {
   @@index([restaurantId])
 }
 
+enum MealType {
+  BREAKFAST
+  LUNCH
+  DINNER
+  EXTENDED_BANNER
+}
+
 model MenuSection {
   id        Int        @id @default(autoincrement())
   name      String
@@ -111,18 +118,21 @@ model MenuSection {
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId Int
 
+  mealType MealType
+
   updatedAt DateTime @updatedAt
 
-  @@unique([name, restaurantId], name: "menuSectionIdentifier")
+  @@unique([name, restaurantId, mealType], name: "menuSectionIdentifier")
   @@index([restaurantId])
 }
 
 model MenuItem {
   id                 Int                 @id @default(autoincrement())
   name               String
-  description        String
-  ingredients        String
+  description        String              @db.Text
+  ingredients        String              @db.Text
   allergens          Allergen[]
+  allergensText      String              @db.Text
   carbonFootprint    CarbonFootprint
   dietaryPreferences DietaryPreference[]
 
@@ -206,7 +216,7 @@ model DietaryPreference {
 model Review {
   id     String  @id @default(cuid())
   rating Int
-  review String?
+  review String? @db.Text
   images Image[]
 
   menuItems    MenuItem[]
