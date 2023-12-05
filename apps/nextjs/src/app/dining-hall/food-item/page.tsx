@@ -3,9 +3,11 @@
 import React, { FormEvent, useState } from "react";
 import Image from "next/image";
 import Grid from "@mui/material/Unstable_Grid2";
+import * as Dialog from "@radix-ui/react-dialog";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import { api } from "~/utils/api";
 import { CreateReviewForm, PostList } from "../../_components/reviews";
+import { Tag } from "../../_components/tags";
 
 interface ImageUploaderProps {
   images: ImageListType;
@@ -87,6 +89,35 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
   );
 };
 
+interface DialogBoxProps {
+  title: string;
+  children?: any[];
+}
+const DialogBox: React.FC<DialogBoxProps> = ({ title, children }) => {
+  //console.log(children);
+  return (
+    <div>
+      <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+      <Dialog.Content
+        className="absolute left-1/2 top-1/2 w-96 -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-white p-4 shadow-lg"
+        style={{ width: "30rem" }}
+      >
+        <Dialog.Title className="text-lg font-bold">{title}</Dialog.Title>
+        <Dialog.Description className="text-sm">
+          {children?.map((child, index) => (
+            <p>
+              <span key={index}>
+                {child.name}
+                {index < children.length - 1 ? ", " : ""}
+              </span>
+            </p>
+          ))}
+        </Dialog.Description>
+      </Dialog.Content>
+    </div>
+  );
+};
+
 export default function FoodItem({
   searchParams,
 }: {
@@ -98,7 +129,6 @@ export default function FoodItem({
   const [review, setReview] = useState("");
   const [submittedReview, setSubmittedReview] = useState("");
   const [images, setImages] = React.useState([]);
-  const maxImages = 5;
   const {
     data: foodItem,
     error,
@@ -123,27 +153,62 @@ export default function FoodItem({
     console.log(imageList, addUpdateIndex);
     setImages(imageList as never[]);
   };
+  console.log(foodItem?.allergens);
   return (
-    <div style={{backgroundColor:"#f0e9e1"}}>
-      <div className=" bg-blue-100 rounded-3xl m-8">
-        <div className="ml-52 mt-8">
-          <Grid container spacing={3} direction="row">
-            <Grid direction="column">
-              <h1 className="text-8xl font-bold">{searchParams.name}</h1>
-              <Grid className="text-sm" container direction="row">
-                <Grid><h3>Nutrition |</h3></Grid>
-                <Grid><h3 className="whitespace-pre"> Allergens |</h3></Grid>
-                <Grid><h3 className="whitespace-pre"> Ingredients</h3></Grid>
-              </Grid>
-              <Grid><p className="mt-8 text-lg">{foodItem?.description}</p></Grid>
+    <div style={{ backgroundColor: "#f0e9e1" }}>
+      <div
+        className=" m-8 flex rounded-3xl bg-blue-100"
+        style={{ alignItems: "stretch" }}
+      >
+        <div className="my-8 ml-52 mr-8 flex-grow">
+          <Grid direction={"column"}>
+            <Grid>
+              <div>
+                <img
+                  className="rounded-3xl"
+                  src="/images/KrustyKrab.webp"
+                  alt="Picture of the author"
+                  width="700"
+                  style={{ float: "right" }}
+                />
+                <h1 className="text-align break-words text-8xl font-bold">
+                  {searchParams.name}
+                </h1>
+              </div>
             </Grid>
-            <Grid className="mr-8"smOffset="auto">
-              <img
-                className="rounded-3xl"
-                src="/images/KrustyKrab.webp"
-                alt="Picture of the author"
-                width="700"
-              />
+            <Grid className="text-sm" container direction="row">
+              <Grid>
+                <Dialog.Root>
+                  <Dialog.Trigger>
+                    <h3 className="mt-4">Nutrition | </h3>
+                  </Dialog.Trigger>
+                </Dialog.Root>
+              </Grid>
+              <Grid>
+                <Dialog.Root>
+                  <Dialog.Trigger>
+                    <h3 className="mt-4 whitespace-pre"> Ingredients | </h3>
+                  </Dialog.Trigger>
+                </Dialog.Root>
+              </Grid>
+              <Grid>
+                <Dialog.Root>
+                  <Dialog.Trigger>
+                    <h3 className="mt-4 whitespace-pre">Allergens</h3>
+                  </Dialog.Trigger>
+                  <DialogBox title="Allergens" children={foodItem?.allergens} />
+                </Dialog.Root>
+              </Grid>
+            </Grid>
+            <Grid className="text-lg">
+              <p>{foodItem?.description}</p>
+            </Grid>
+            <Grid container direction="row">
+              {foodItem?.dietaryPreferences.map((dietaryPreference) => (
+                <Grid key={dietaryPreference.id}>
+                  <Tag name={dietaryPreference.name} />
+                </Grid>
+              ))}
             </Grid>
           </Grid>
         </div>
@@ -155,9 +220,11 @@ export default function FoodItem({
       <p><b>DIETARY PREFERANCES: </b>{foodItem?.dietaryPreferences.map((dietaryPreference, index) => (
         <span key={dietaryPreference.id}>{dietaryPreference.name}{index < foodItem.dietaryPreferences.length-1 ? ', ' : ''}</span>
       ))}</p>*/}
-      <div className="mx-52 w-100 relative mt-8 h-72 items-center justify-center">
+      <div className="w-100 relative mx-52 mt-8 h-72 items-center justify-center">
         <h1 className="text-4xl font-bold">Wanna see more?</h1>
-        <h2 className="text-xl font-semibold">Leave a review or upload an image!</h2>
+        <h2 className="text-xl font-semibold">
+          Leave a review or upload an image!
+        </h2>
         <ImageUploader images={images} onChange={onChange} maxImages={5} />
         <h2 className="text-xl font-bold">Reviews</h2>
         <CreateReviewForm></CreateReviewForm>

@@ -2,25 +2,11 @@
 import React, { FormEvent, useState } from "react";
 import Link from "next/link";
 import StarIcon from "@mui/icons-material/Star";
-import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Unstable_Grid2";
 import { api } from "~/utils/api";
+import { Tag } from "../_components/tags";
 
-interface TagProps {
-  name: string;
-}
-
-const Tag: React.FC<TagProps> = ({ name }) => {
-  return (
-    <Chip
-      className="my-2 mr-2 text-sm text-white"
-      label={name}
-      style={{ backgroundColor: "#58a1d1", color: "white" }}
-      sx={{ borderRadius: 2 }}
-    />
-  );
-};
 
 interface FoodItemsProps {
   name: string;
@@ -36,7 +22,7 @@ const FoodItem: React.FC<FoodItemsProps> = ({
   avgRating,
 }) => {
   const calculateWidth = (name: string) => {
-    return `${100 + 20 * name.length}px`;
+    return `${200 + 10* name.length}px`;
   };
 
   return (
@@ -137,24 +123,6 @@ export default function DiningHall({
                 avgRating={5}
               />
             ))}
-            <FoodItem
-              name="Krabby Patty"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscingeu aliquam diam elementum. Quisque sagittis pulvinar nisl, nec finibus massa mollis eget. Proin"
-              id={1}
-              avgRating={5}
-            />
-            <FoodItem
-              name="Bucket of Chum"
-              description="JJ flip, what the zip"
-              id={2}
-              avgRating={1}
-            />
-            <FoodItem
-              name="Kelp"
-              description="Loi molestie vehicula ut in nunc. Vivam diam elementum. Quisque sagittis pulvinar nisl, nec finibus massa mollis eget. Proin"
-              id={3}
-              avgRating={3.2}
-            />
           </Grid>
         </div>
       ))}
