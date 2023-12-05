@@ -2,10 +2,11 @@
 
 import React, { FormEvent, useState } from "react";
 import Image from "next/image";
+import Grid from "@mui/material/Unstable_Grid2";
 import ImageUploading, { ImageListType } from "react-images-uploading";
-import {CreateReviewForm, PostList } from "../../_components/reviews"
-import { Rating } from 'react-simple-star-rating'
 import { api } from "~/utils/api";
+import { CreateReviewForm, PostList } from "../../_components/reviews";
+
 interface ImageUploaderProps {
   images: ImageListType;
   onChange: (
@@ -14,7 +15,11 @@ interface ImageUploaderProps {
   ) => void;
   maxImages: number;
 }
-const ImageUploader: React.FC<ImageUploaderProps> = ({images,onChange,maxImages,}) => {
+const ImageUploader: React.FC<ImageUploaderProps> = ({
+  images,
+  onChange,
+  maxImages,
+}) => {
   return (
     <ImageUploading
       multiple
@@ -82,7 +87,9 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({images,onChange,maxImages,
   );
 };
 
-export default function FoodItem({searchParams,}: {
+export default function FoodItem({
+  searchParams,
+}: {
   searchParams: {
     name: string;
     id: number;
@@ -92,14 +99,17 @@ export default function FoodItem({searchParams,}: {
   const [submittedReview, setSubmittedReview] = useState("");
   const [images, setImages] = React.useState([]);
   const maxImages = 5;
-  const {data: foodItem, error, isLoading} = api.menuItemRouter.byId.useQuery(Number(searchParams.id));
+  const {
+    data: foodItem,
+    error,
+    isLoading,
+  } = api.menuItemRouter.byId.useQuery(Number(searchParams.id));
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
   const handleReviewChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     setReview(event.target.value);
-    
   };
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -114,18 +124,41 @@ export default function FoodItem({searchParams,}: {
     setImages(imageList as never[]);
   };
   return (
-    <div>
-      <h1 className="text-3xl font-bold">{searchParams.name}</h1>
-      <ImageUploader images={images} onChange={onChange} maxImages={5}/>
-      <p><b>INGREDIENTS: </b>{foodItem?.ingredients}</p>
+    <div style={{backgroundColor:"#f0e9e1"}}>
+      <div className=" bg-blue-100 rounded-3xl m-8">
+        <div className="ml-52 mt-8">
+          <Grid container spacing={3} direction="row">
+            <Grid direction="column">
+              <h1 className="text-8xl font-bold">{searchParams.name}</h1>
+              <Grid className="text-sm" container direction="row">
+                <Grid><h3>Nutrition |</h3></Grid>
+                <Grid><h3 className="whitespace-pre"> Allergens |</h3></Grid>
+                <Grid><h3 className="whitespace-pre"> Ingredients</h3></Grid>
+              </Grid>
+              <Grid><p className="mt-8 text-lg">{foodItem?.description}</p></Grid>
+            </Grid>
+            <Grid className="mr-8"smOffset="auto">
+              <img
+                className="rounded-3xl"
+                src="/images/KrustyKrab.webp"
+                alt="Picture of the author"
+                width="700"
+              />
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+      {/*<p><b>INGREDIENTS: </b>{foodItem?.ingredients}</p>
       <p><b>ALLERGENS: </b>{foodItem?.allergens.map((allergen, index) => (
         <span key={allergen.id}>{allergen.name}{index < foodItem.allergens.length-1 ? ', ' : ''}</span>
       ))}</p>
       <p><b>DIETARY PREFERANCES: </b>{foodItem?.dietaryPreferences.map((dietaryPreference, index) => (
         <span key={dietaryPreference.id}>{dietaryPreference.name}{index < foodItem.dietaryPreferences.length-1 ? ', ' : ''}</span>
-      ))}</p>
-      <p><b>Description: </b>{foodItem?.description}</p>
-      <div className="w-100 relative mx-auto h-72 items-center justify-center">
+      ))}</p>*/}
+      <div className="mx-52 w-100 relative mt-8 h-72 items-center justify-center">
+        <h1 className="text-4xl font-bold">Wanna see more?</h1>
+        <h2 className="text-xl font-semibold">Leave a review or upload an image!</h2>
+        <ImageUploader images={images} onChange={onChange} maxImages={5} />
         <h2 className="text-xl font-bold">Reviews</h2>
         <CreateReviewForm></CreateReviewForm>
         <PostList restaurantId={1}></PostList>
