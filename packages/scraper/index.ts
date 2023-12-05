@@ -3,7 +3,12 @@ import axios from "axios";
 import * as cheerio from "cheerio";
 import { z } from "zod";
 
-import type { MealType, MenuItem, MenuSection } from "@menus-for-ucla/db";
+import type {
+  MealType,
+  MenuItem,
+  MenuSection,
+  NutritionFacts,
+} from "@menus-for-ucla/db";
 import {
   CarbonFootprint,
   DietaryPreferenceEnum,
@@ -174,7 +179,6 @@ function scrapeMenu(
     .then(async (response) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const $ = cheerio.load(response.data);
-      const menuSections: MenuSection[] = [];
       const sections = $("li.sect-item").toArray();
 
       const restaurant = await prisma.restaurant.upsert({
@@ -185,14 +189,7 @@ function scrapeMenu(
 
       for (const section of sections) {
         await scrapeMenuSection($, section, mealType, restaurant.id);
-        // menuSections.push(menuSection);
       }
-
-      // const restaurant: Restaurant = {
-      //   name: restaurantName,
-      //   isResidentialRestaurant: false,
-      //   menuSections: menuSections,
-      // };
     })
     .catch((error: AxiosError) => {
       console.error(
@@ -213,13 +210,15 @@ async function scrapeMenuSection(
   const menuSection = await prisma.menuSection.upsert({
     where: {
       menuSectionIdentifier: {
-        name: section.name,
+        name: sectionName,
         restaurantId: restaurantId,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        mealType: mealType.toUpperCase() as MealType,
       },
     },
     update: {},
     create: {
-      name: section.name,
+      name: sectionName,
       restaurant: { connect: { id: restaurantId } },
       menuItems: { create: [] },
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -233,12 +232,7 @@ async function scrapeMenuSection(
     // menuItems.push(menuItem);
   }
 
-  // const menuSection: MenuSection = {
-  //   name: sectionName,
-  //   mealType: mealType.toUpperCase() as MealType,
-  //   menuItems: menuItems,
-  // };
-  // return menuSection;
+  return menuSection;
 }
 
 async function scrapeMenuItem(url: string, menuSectionId: number) {
@@ -250,7 +244,6 @@ async function scrapeMenuItem(url: string, menuSectionId: number) {
 
     const $ = cheerio.load(html.data);
 
-    //scrape vitamins
     const vitamins: [string, number][] = [];
     $(".nfvitleft, .nfvitright").map((index, element) => {
       vitamins.push([
@@ -275,37 +268,134 @@ async function scrapeMenuItem(url: string, menuSectionId: number) {
       macros.push(macro);
     });
 
-    const nutrition: NutritionalInfo = {
+    const nutritionFacts = {
       servingSize: $(".nfserv").text().slice(13).trim(),
-      caloriesPerServing: $(".nfcal").text().slice(9).trim(),
-      macronutrients: macros,
-      vitamins: vitamins,
-      options: $(".prodwebcode")
-        .map((index, element) => $(element).text().trim())
-        .get(),
+      calories: $(".nfcal").text().slice(9).trim(),
+      totalFat: macros[0].grams,
+      saturatedFat: macros[1].grams,
+      transFat: macros[2].grams,
+      cholesterol: macros[3].grams,
+      sodium: macros[4].grams,
+      totalCarbohydrate: macros[5].grams,
+      dietaryFiber: macros[6].grams,
+      sugars: macros[7].grams,
+      protein: macros[8].grams,
+      calcium: vitamins[0][1].toString(),
+      iron: vitamins[1][1].toString(),
+      potassium: vitamins[2][1].toString(),
+      vitaminD: vitamins[3][1].toString(),
     };
-    console.log(nutrition);
 
-    const rawAllerges: string[] = $(".ingred_allergen > p")
+    let carbonFootprint: CarbonFootprint = CarbonFootprint.LOW;
+    const dietaryPreferences: DietaryPreferenceEnum[] = [];
+    const allergens: FoodAllergen[] = [];
+
+    const menuItemLabels = $(".prodwebcode")
+      .map((index, element) => $(element).text().trim())
+      .get();
+    for (const label of menuItemLabels) {
+      switch (label) {
+        case "Low Carbon Footprint":
+          carbonFootprint = CarbonFootprint.LOW;
+          break;
+        case "High Carbon Footprint":
+          carbonFootprint = CarbonFootprint.HIGH;
+          break;
+        case "Vegeterian Menu Option":
+          dietaryPreferences.push(DietaryPreferenceEnum.VEGETARIAN);
+          break;
+        case "Vegan Menu Option":
+          dietaryPreferences.push(DietaryPreferenceEnum.VEGAN);
+          break;
+        case "Prepared with Alcohol":
+          dietaryPreferences.push(DietaryPreferenceEnum.PREPARED_WITH_ALCOHOL);
+          break;
+        case "Halal Menu Option":
+          dietaryPreferences.push(DietaryPreferenceEnum.HALAL);
+          break;
+        case "Contains Dairy":
+          allergens.push(FoodAllergen.DAIRY);
+          break;
+        case "Contains Egg":
+          allergens.push(FoodAllergen.EGGS);
+          break;
+        case "Contains Peanut":
+          allergens.push(FoodAllergen.PEANUTS);
+          break;
+        case "Contains Tree Nuts":
+          allergens.push(FoodAllergen.TREE_NUTS);
+          break;
+        case "Contains Wheat":
+          allergens.push(FoodAllergen.WHEAT);
+          break;
+        case "Contains Soy":
+          allergens.push(FoodAllergen.SOYBEANS);
+          break;
+        case "Contains Fish":
+          allergens.push(FoodAllergen.FISH);
+          break;
+        case "Contains Crustacean Shellfish":
+          allergens.push(FoodAllergen.CRUSTACEAN_SHELLFISH);
+          break;
+        case "Contains Sesame":
+          allergens.push(FoodAllergen.SESAME);
+          break;
+        default:
+          break;
+      }
+    }
+
+    const allergensText: string = $(".ingred_allergen > p")
       .eq(1)
       .text()
-      .slice(12)
-      .split(/\s*,\s*(?![^()]*\))/);
+      .slice(12);
 
-    const allergens: FoodAllergen[] = [];
-    for (const rawAllergen of rawAllerges) {
-      allergens.push(FoodAllergen[rawAllergen as keyof typeof FoodAllergen]);
-    }
     const allergenIds = await getAllergenIds(allergens);
 
-    const menuItem: MenuItem = {
-      name: $("h2").text().trim(),
-      description: $(".recipe_description").text().trim(),
-      ingredients: $(".ingred_allergen").find("p").first().text(),
-      carbonFootprint: CarbonFootprint.LOW,
-    };
+    const dietaryPreferenceIds =
+      await getDietaryPreferenceIds(dietaryPreferences);
 
-    upsertMenuItem(menuItem)
+    const name = $("h2").text().trim();
+    const description = $("description").text().trim();
+    const ingredients = $(".ingred_allergen")
+      .find("p")
+      .first()
+      .text()
+      .slice(13);
+
+    await prisma.menuItem.upsert({
+      where: { menuItemIdentifier: { name: name, menuSectionId } },
+      update: {
+        description: description,
+        ingredients: ingredients,
+        allergens: { connect: allergenIds.map((id) => ({ id })) },
+        carbonFootprint: carbonFootprint,
+        dietaryPreferences: {
+          connect: dietaryPreferenceIds.map((id) => ({ id })),
+        },
+        allergensText: allergensText,
+        nutritionFacts: {
+          upsert: {
+            create: nutritionFacts,
+            update: nutritionFacts,
+          },
+        },
+        menuSection: { connect: { id: menuSectionId } },
+      },
+      create: {
+        name: name,
+        description: description,
+        ingredients: ingredients,
+        allergens: { connect: allergenIds.map((id) => ({ id })) },
+        carbonFootprint: carbonFootprint,
+        dietaryPreferences: {
+          connect: dietaryPreferenceIds.map((id) => ({ id })),
+        },
+        allergensText: allergensText,
+        nutritionFacts: { create: nutritionFacts },
+        menuSection: { connect: { id: menuSectionId } },
+      },
+    });
   } catch (error) {
     console.error(
       `Error fetching nutritional information from ${url}: ${
@@ -329,6 +419,21 @@ async function getAllergenIds(allergens: FoodAllergen[]): Promise<number[]> {
   );
 }
 
+async function getDietaryPreferenceIds(
+  dietaryPreferences: DietaryPreferenceEnum[],
+): Promise<number[]> {
+  return Promise.all(
+    dietaryPreferences.map(async (preferenceName) => {
+      const preference = await prisma.dietaryPreference.upsert({
+        where: { name: preferenceName },
+        update: {},
+        create: { name: preferenceName },
+      });
+      return preference.id;
+    }),
+  );
+}
+
 // scrapeActivityLevels();
 void scrapeMenus();
 
@@ -336,36 +441,3 @@ void scrapeMenus();
 //scrapeNutrition("http://menu.dining.ucla.edu/Recipes/979336/1"); // for debugging
 
 //checking for completion
-
-async function upsertMenuItem(
-  item: z.infer<typeof MenuItemSchema>,
-  menuSectionId: number,
-  allergenIds: number[],
-  dietaryPreferenceIds: number[],
-) {
-  await prisma.menuItem.upsert({
-    where: { menuItemIdentifier: { name: item.name, menuSectionId } },
-    update: {
-      description: item.description,
-      ingredients: item.ingredients,
-      allergens: { connect: allergenIds.map((id) => ({ id })) },
-      carbonFootprint: item.carbonFootprint,
-      dietaryPreferences: {
-        connect: dietaryPreferenceIds.map((id) => ({ id })),
-      },
-      nutritionFacts: { update: item.nutritionFacts },
-    },
-    create: {
-      name: item.name,
-      description: item.description,
-      ingredients: item.ingredients,
-      allergens: { connect: allergenIds.map((id) => ({ id })) },
-      carbonFootprint: item.carbonFootprint,
-      dietaryPreferences: {
-        connect: dietaryPreferenceIds.map((id) => ({ id })),
-      },
-      nutritionFacts: { create: item.nutritionFacts },
-      menuSection: { connect: { id: menuSectionId } },
-    },
-  });
-}

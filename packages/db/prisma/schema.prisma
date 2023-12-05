@@ -67,7 +67,7 @@ model Restaurant {
   id                      Int             @id @default(autoincrement())
   name                    String          @unique
   isResidentialRestaurant Boolean         @default(true)
-  menuSections            MenuSection[]               
+  menuSections            MenuSection[]
   reviews                 Review[]
   currentActivityLevel    Int
   activityLevels          ActivityLevel[]
@@ -115,23 +115,24 @@ model MenuSection {
   name      String
   menuItems MenuItem[]
 
-  restaurant   Restaurant      @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId Int
 
-  mealType  MealType
+  mealType MealType
 
   updatedAt DateTime @updatedAt
 
-  @@unique([name, restaurantId], name: "menuSectionIdentifier")
+  @@unique([name, restaurantId, mealType], name: "menuSectionIdentifier")
   @@index([restaurantId])
 }
 
 model MenuItem {
   id                 Int                 @id @default(autoincrement())
   name               String
-  description        String
-  ingredients        String
+  description        String              @db.Text
+  ingredients        String              @db.Text
   allergens          Allergen[]
+  allergensText      String              @db.Text
   carbonFootprint    CarbonFootprint
   dietaryPreferences DietaryPreference[]
 
@@ -215,7 +216,7 @@ model DietaryPreference {
 model Review {
   id     String  @id @default(cuid())
   rating Int
-  review String?
+  review String? @db.Text
   images Image[]
 
   menuItems    MenuItem[]
