@@ -2,11 +2,12 @@
 
 import React, { FormEvent, useState } from "react";
 import Image from "next/image";
+import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Unstable_Grid2";
 import * as Accordion from "@radix-ui/react-accordion";
 import * as Dialog from "@radix-ui/react-dialog";
 import ImageUploading, { ImageListType } from "react-images-uploading";
-import Divider from "@mui/material/Divider";
+
 import { api } from "~/utils/api";
 import { CreateReviewForm, PostList } from "../../_components/reviews";
 import { AllergenTag, DietaryTag } from "../../_components/tags";
@@ -157,9 +158,9 @@ export default function FoodItem({
   };
   console.log(foodItem?.allergens);
   return (
-    <main className="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
+    <main className=" bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
       <div
-        className=" m-8 flex rounded-3xl bg-sky-500/20"
+        className="font-serif m-8 flex rounded-3xl bg-sky-500/20"
         style={{ alignItems: "stretch" }}
       >
         <div className="my-8 ml-52 mr-8 flex-grow">
@@ -167,59 +168,52 @@ export default function FoodItem({
             <Grid>
               <Grid>
                 <img
-                  className="rounded-3xl ml-8"
+                  className="ml-8 rounded-3xl"
                   src="/images/KrustyKrab.webp"
                   alt="Picture of the author"
                   width="700vw"
                   style={{ float: "right" }}
                 />
-                </Grid>
-                <Grid>
+              </Grid>
+              <Grid>
                 <h1 className="text-align break-words text-7xl font-bold">
                   {searchParams.name}
                 </h1>
-                </Grid>
+              </Grid>
             </Grid>
             <Grid className="text-lg">
               <p>{foodItem?.description}</p>
             </Grid>
             <Grid className="mt-4">
-              <Accordion.Root className="bg-white flex rounded-lg p-4" type="multiple" style={{ flexDirection: 'column'}}>
-                <Accordion.Item value="value1">
-                  <Accordion.AccordionTrigger>
-                    Ingredients
-                  </Accordion.AccordionTrigger>
-                  <Accordion.AccordionContent>
-                    <p>{foodItem?.ingredients}</p>
-                  </Accordion.AccordionContent>
-                </Accordion.Item>
+              <div
+                className="flex rounded-lg bg-white p-4"
+                style={{ flexDirection: "column" }}
+              >
+                <div className= "mb-2">
+                  <h2 className="text-lg font-semibold">Ingredients</h2>
+                  <p className="text-sm">{foodItem?.ingredients}</p>
+                </div>
+                <Divider/>
                 
-                <Accordion.Item value="value2">
-                  <Accordion.AccordionTrigger>
-                    Allergens
-                  </Accordion.AccordionTrigger>
-                  <Accordion.AccordionContent>
-                    {foodItem?.allergens.map((allergen) => (
-                      <span key={allergen.id}>
-                        <AllergenTag name={allergen.name} />
-                      </span>
-                    ))}
-                  </Accordion.AccordionContent>
-                  </Accordion.Item>
-                  <Accordion.Item value="value3">
-                    <Accordion.AccordionTrigger>
-                      Dietary Preferences
-                    </Accordion.AccordionTrigger>
-                    <Accordion.AccordionContent>
-                      {foodItem?.dietaryPreferences.map((dietaryPreference) => (
-                        <span key={dietaryPreference.id}>
-                          <DietaryTag name={dietaryPreference.name} />
-                        </span>
-                      ))}
-                    </Accordion.AccordionContent>
-                  </Accordion.Item>
+                <div className="mb-2">
+                  <h2 className="text-lg font-semibold">Allergens</h2>
+                  {foodItem?.allergens.map((allergen) => (
+                    <span key={allergen.id}>
+                      <AllergenTag name={allergen.name} />
+                    </span>
+                  ))}
+                </div>
+                <Divider/>
 
-              </Accordion.Root>
+                <div>
+                  <h2 className="text-lg font-semibold">Dietary Preferences</h2>
+                  {foodItem?.dietaryPreferences.map((dietaryPreference) => (
+                    <span key={dietaryPreference.id}>
+                      <DietaryTag name={dietaryPreference.name} />
+                    </span>
+                  ))}
+                </div>
+              </div>
             </Grid>
           </Grid>
         </div>

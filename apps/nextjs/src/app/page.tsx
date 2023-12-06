@@ -41,7 +41,7 @@ export default function HomePage() {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-      <main className="flex h-screen flex-col items-center text-black bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
+      <main className="font-serif flex h-screen flex-col items-center text-black bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
         <div className="container mt-12 flex flex-col items-center justify-center gap-4 py-8">
           <h1 className="text-5xl font-normal tracking-tight sm:text-[5rem]">
             Menus for UCLA

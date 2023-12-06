@@ -95,7 +95,7 @@ export default function DiningHall({
     setReview("");
   };
   return (
-    <main className="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
+    <main className="font-serif bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
       <div className="relative">
         <img
           className="blur-sm brightness-50"
