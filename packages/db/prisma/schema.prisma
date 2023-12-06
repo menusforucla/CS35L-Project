@@ -255,6 +255,7 @@ model ActivityLevel {
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId Int
 
+  hour Int
   time DateTime @default(now())
 
   @@index([restaurantId])

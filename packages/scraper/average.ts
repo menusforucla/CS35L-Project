@@ -11,6 +11,8 @@ interface hourAverage{
     hour: number
     average: number
 }
+
+
 function calculateAverage(restaurant: string, mealperiod: string)
 {
     const key = restaurant + " " + mealperiod
@@ -44,18 +46,19 @@ function calculateAverage(restaurant: string, mealperiod: string)
            hoursTotal.get(data.time)![1] += parseInt(data.percentage)
         }
     })
-    const hoursAverage: hourAverage[] = []
+    const hoursAverage = new Map();
     for (let i = hours[0]; i <= hours[1]; i++)
     {
         if (hoursTotal.get(i)![0] == -1)
         {
-            hoursAverage.push({hour: i, average: -1})
+            hoursAverage.set(i, -1)
         }
         else
         {
-            hoursAverage.push({hour : i, average: hoursTotal.get(i)![1]/hoursTotal.get(i)![0]})
+            hoursAverage.set(i, hoursTotal.get(i)![1]/hoursTotal.get(i)![0])
         }
     }
+    
     console.log(hoursAverage)
 }
 
