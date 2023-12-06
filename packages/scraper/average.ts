@@ -62,10 +62,10 @@ function calculateAverage(restaurant: string, mealperiod: string)
 function processFiles(): RestaurantData[]
 {
     
-    const files = fs.readdirSync('../../AverageAvailability/activity-data')
+    const files = fs.readdirSync('./activity-data')
     let data: RestaurantData[] = []
     files.forEach((file) => {
-        const filePath = path.join('../../AverageAvailability/activity-data',file)
+        const filePath = path.join('./activity-data',file)
         if (fs.statSync(filePath).isFile() && path.extname(filePath) === '.json'){
             const fileContent = fs.readFileSync(filePath, 'utf-8')
             const jsonData : RestaurantData[] = JSON.parse(fileContent)
