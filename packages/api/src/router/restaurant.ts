@@ -10,13 +10,13 @@ export const restaurantRouter = createTRPCRouter({
   }),
 
   byId: publicProcedure.input(z.number()).query(({ ctx, input }) => {
-    const mealType = getMealType();
+    const mealType: MealType = getMealType();
     console.log(mealType);
     return ctx.prisma.restaurant.findUnique({
       where: { id: input },
       include: {
         menuSections: {
-          // where: { mealType: mealType },
+          where: { mealType: mealType },
           include: {
             menuItems: {
               include: {
