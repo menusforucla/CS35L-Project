@@ -65,6 +65,7 @@ model VerificationToken {
 
 model Restaurant {
   id                      Int             @id @default(autoincrement())
+  image                   String
   name                    String          @unique
   isResidentialRestaurant Boolean         @default(true)
   menuSections            MenuSection[]
