@@ -5,6 +5,7 @@ import { Grid } from "@mui/material";
 import type { Allergen, DietaryPreference } from "@menus-for-ucla/db";
 
 import { AllergenTag, DietaryTag } from "../tags";
+import React from "react";
 
 interface FoodItemsProps {
   name: string;

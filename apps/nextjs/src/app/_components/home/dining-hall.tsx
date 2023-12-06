@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { CircularProgressbar } from "react-circular-progressbar";
 

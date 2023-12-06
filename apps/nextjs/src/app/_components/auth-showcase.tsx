@@ -1,4 +1,5 @@
 import { auth, signIn, signOut } from "@menus-for-ucla/auth";
+import React from "react";
 
 export async function AuthShowcase() {
   const session = await auth();

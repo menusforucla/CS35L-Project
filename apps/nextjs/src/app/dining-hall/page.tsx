@@ -1,106 +1,221 @@
 "use client";
 
-import type { FormEvent } from "react";
 import React, { useState } from "react";
-import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Unstable_Grid2";
+import * as Accordion from "@radix-ui/react-accordion";
+import { UploadButton } from "@uploadthing/react";
 
 import { api } from "~/utils/api";
-import { FoodItem } from "../_components/dining-hall/food-item";
+import { AllergenTag, DietaryTag } from "../_components/tags";
+// import { CreateReviewForm, PostList } from "../../_components/reviews";
 
-export default function DiningHall({
+// interface ImageUploaderProps {
+//   images: ImageListType;
+//   onChange: (
+//     imageList: ImageListType,
+//     addUpdateIndex: number[] | undefined,
+//   ) => void;
+//   maxImages: number;
+// }
+// const ImageUploader: React.FC<ImageUploaderProps> = ({
+//   images,
+//   onChange,
+//   maxImages,
+// }) => {
+//   return (
+//     <ImageUploading
+//       multiple
+//       value={images}
+//       onChange={onChange}
+//       maxNumber={maxImages}
+//       dataURLKey="data_url"
+//     >
+//       {({
+//         imageList,
+//         onImageUpload,
+//         onImageRemoveAll,
+//         onImageUpdate,
+//         onImageRemove,
+//         isDragging,
+//         dragProps,
+//       }) => (
+//         <div>
+//           <div className="flex space-x-2">
+//             <button
+//               className="whitespace-nowrap rounded border border-blue-500 bg-transparent px-4 py-2 font-semibold text-blue-700 hover:border-transparent hover:bg-blue-500 hover:text-white"
+//               style={isDragging ? { color: "red" } : undefined}
+//               onClick={onImageUpload}
+//               {...dragProps}
+//             >
+//               Click or Drop here
+//             </button>
+//             &nbsp;
+//             <button
+//               className="whitespace-nowrap rounded border border-red-500 bg-transparent px-4 py-2 font-semibold text-red-700 hover:border-transparent hover:bg-red-500 hover:text-white"
+//               onClick={onImageRemoveAll}
+//             >
+//               Remove All Images
+//             </button>
+//           </div>
+
+//           {imageList.map((image, index) => (
+//             <div key={index}>
+//               <Image
+//                 className="rounded-t"
+//                 src={image.data_url}
+//                 alt={""}
+//                 width="100"
+//                 height="100"
+//               />
+//               <div className="flex space-x-2">
+//                 <button
+//                   className="rounded border border-blue-500 bg-transparent px-4 py-2 font-semibold text-blue-700 hover:border-transparent hover:bg-blue-500 hover:text-white"
+//                   onClick={() => onImageUpdate(index)}
+//                 >
+//                   Update
+//                 </button>
+//                 <button
+//                   className="rounded border border-red-500 bg-transparent px-4 py-2 font-semibold text-red-700 hover:border-transparent hover:bg-red-500 hover:text-white"
+//                   onClick={() => onImageRemove(index)}
+//                 >
+//                   Remove
+//                 </button>
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+//       )}
+//     </ImageUploading>
+//   );
+// };
+
+export default function FoodItem({
   searchParams,
 }: {
   searchParams: {
-    title: string;
+    name: string;
     id: number;
   };
 }) {
-  const [review, setReview] = useState("");
-  const [submittedReview, setSubmittedReview] = useState("");
+  // const [review, setReview] = useState("");
+  // const [submittedReview, setSubmittedReview] = useState("");
+  // const [images, setImages] = React.useState([]);
   const {
-    data: diningHall,
+    data: foodItem,
     error,
     isLoading,
-  } = api.restaurant.byId.useQuery(Number(searchParams.id));
+  } = api.menuItemRouter.byId.useQuery(Number(searchParams.id));
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
+  // const handleReviewChange = (
+  //   event: React.ChangeEvent<HTMLTextAreaElement>,
+  // ) => {
+  //   setReview(event.target.value);
+  // };
+  // const handleSubmit = (event: FormEvent) => {
+  //   event.preventDefault();
+  //   setSubmittedReview(review);
+  //   setReview("");
+  // };
+  // const onChange = (
+  //   imageList: ImageListType,
+  //   addUpdateIndex: number[] | undefined,
+  // ) => {
+  //   console.log(imageList, addUpdateIndex);
+  //   setImages(imageList as never[]);
+  // };
 
-  const handleReviewChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    setReview(event.target.value);
-  };
-
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    setSubmittedReview(review);
-    setReview("");
-  };
+  console.log(foodItem?.allergens);
   return (
     <main className="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
-      <div className="relative">
-        <img
-          className="blur-sm brightness-50"
-          src={"/images/KrustyKrab.webp"}
-          alt="Krusty Krab"
-          style={{
-            width: "100%",
-            height: "33vh",
-            objectFit: "cover",
-          }}
-        />
-        <h1
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-5xl font-bold"
-          style={{ color: "white" }}
-        >
-          {searchParams.title}
-        </h1>
-      </div>
-      <div className="ml-8">
-        {diningHall?.menuSections.map((menuSection) => (
-          <div key={menuSection.id} className="mb-5">
-            <h2
-              className="mb-2 mt-10 text-4xl font-bold"
-              style={{ color: "#ab9f00" }}
-            >
-              {menuSection.name}
-            </h2>
-            <div className="my-4">
-              <Divider className="bg-violet-500/30" />
-            </div>
-            <Grid container spacing={2}>
-              {menuSection?.menuItems.map((menuItem) => (
-                <FoodItem
-                  key={menuItem.id}
-                  name={menuItem.name}
-                  description={menuItem.description}
-                  id={menuItem.id}
-                  avgRating={5}
-                  allergens={menuItem.allergens}
-                  dietPrefs={menuItem.dietaryPreferences}
+      <div
+        className=" m-8 flex rounded-3xl bg-sky-500/20"
+        style={{ alignItems: "stretch" }}
+      >
+        <div className="my-8 ml-52 mr-8 flex-grow">
+          <Grid direction={"column"}>
+            <Grid>
+              <Grid>
+                <img
+                  className="ml-8 rounded-3xl"
+                  src="/images/KrustyKrab.webp"
+                  alt="Author"
+                  width="700vw"
+                  style={{ float: "right" }}
                 />
-              ))}
+              </Grid>
+              <Grid>
+                <h1 className="text-align break-words text-7xl font-bold">
+                  {searchParams.name}
+                </h1>
+              </Grid>
             </Grid>
-          </div>
-        ))}
-        <div className="w-100  h-72 items-center justify-center">
-          <h2 className="mb-1 text-xl font-bold">Reviews</h2>
-          <form onSubmit={handleSubmit}>
-            <textarea
-              value={review}
-              placeholder="Write your review!"
-              onChange={handleReviewChange}
-            />
-            <button
-              className="mx-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-              type="submit"
-            >
-              Submit
-            </button>
-          </form>
-          {submittedReview && <p>{submittedReview}</p>}
+            <Grid className="text-lg">
+              <p>{foodItem?.description}</p>
+            </Grid>
+            <Grid className="mt-4">
+              <Accordion.Root
+                className="flex rounded-lg bg-white p-4"
+                type="multiple"
+                style={{ flexDirection: "column" }}
+              >
+                <Accordion.Item value="value1">
+                  <Accordion.AccordionTrigger>
+                    Ingredients
+                  </Accordion.AccordionTrigger>
+                  <Accordion.AccordionContent>
+                    <p>{foodItem?.ingredients}</p>
+                  </Accordion.AccordionContent>
+                </Accordion.Item>
+
+                <Accordion.Item value="value2">
+                  <Accordion.AccordionTrigger>
+                    Allergens
+                  </Accordion.AccordionTrigger>
+                  <Accordion.AccordionContent>
+                    {foodItem?.allergens.map((allergen) => (
+                      <span key={allergen.id}>
+                        <AllergenTag name={allergen.name} />
+                      </span>
+                    ))}
+                  </Accordion.AccordionContent>
+                </Accordion.Item>
+                <Accordion.Item value="value3">
+                  <Accordion.AccordionTrigger>
+                    Dietary Preferences
+                  </Accordion.AccordionTrigger>
+                  <Accordion.AccordionContent>
+                    {foodItem?.dietaryPreferences.map((dietaryPreference) => (
+                      <span key={dietaryPreference.id}>
+                        <DietaryTag name={dietaryPreference.name} />
+                      </span>
+                    ))}
+                  </Accordion.AccordionContent>
+                </Accordion.Item>
+              </Accordion.Root>
+            </Grid>
+          </Grid>
         </div>
+      </div>
+      <div className="w-100 relative mx-52 mt-8 h-72 items-center justify-center">
+        <h1 className="text-4xl font-bold">Wanna see more?</h1>
+        <h2 className="text-xl font-semibold">
+          Leave a review or upload an image!
+        </h2>
+        {/* <ImageUploader images={images} onChange={onChange} maxImages={5} /> */}
+        {/* <UploadButton
+          endpoint="imageUploader"
+          onClientUploadComplete={(res) => {
+            console.log("Files: ", res);
+            alert("Upload Completed");
+          }}
+          onUploadError={(error: Error) => {
+            alert(`ERROR! ${error.message}`);
+          }}
+        /> */}
+        <h2 className="text-xl font-bold">Reviews</h2>
+        {/* <CreateReviewForm></CreateReviewForm>
+        <PostList restaurantId={1}></PostList> */}
       </div>
     </main>
   );
