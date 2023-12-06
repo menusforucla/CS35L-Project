@@ -37,6 +37,7 @@
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "18.2.0",
     "react-images-uploading": "^3.1.7",
+    "react-nutrition-label": "github:davidgamero/react-nutrition-label",
     "react-simple-star-rating": "^5.1.7",
     "superjson": "2.2.0",
     "swr": "^2.2.4",

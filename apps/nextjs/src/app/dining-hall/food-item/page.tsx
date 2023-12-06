@@ -8,7 +8,7 @@ import ImageUploading, { ImageListType } from "react-images-uploading";
 import { api } from "~/utils/api";
 import { CreateReviewForm, PostList } from "../../_components/reviews";
 import { Tag } from "../../_components/tags";
-
+import NutritionLabel from "../../../../../../node_modules/react-nutrition-label/src/components/NutritionLabel/index";
 interface ImageUploaderProps {
   images: ImageListType;
   onChange: (
@@ -118,6 +118,39 @@ const DialogBox: React.FC<DialogBoxProps> = ({ title, children }) => {
   );
 };
 
+const DialogNutritions: React.FC<DialogBoxProps> = ({ title, children }) => {
+  //console.log(children);
+  return (
+    <div>
+      <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+      <Dialog.Content
+        className="absolute left-1/2 top-1/2 w-96 -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-white p-4 shadow-lg"
+        style={{ width: "30rem"}}
+      >
+        <Dialog.Title className="text-lg font-bold">{title}</Dialog.Title>
+        <div className="flex justify-center">
+          <NutritionLabel 
+            servingSize="2" 
+            saturatedFat={2} 
+            sodium={2} 
+            servingsPerContainer="1" 
+            calories={2} 
+            caloriesFromFat={2} 
+            totalFat={2}
+            transFat={2}
+            cholesterol={1}
+            totalCarbohydrate={1}
+            dietaryFiber={1}
+            sugars={1}
+            protein={11}
+            vitamins={["Meow"]}/>
+          </div>
+      </Dialog.Content>
+    </div>
+  );
+};
+
+
 export default function FoodItem({
   searchParams,
 }: {
@@ -126,8 +159,6 @@ export default function FoodItem({
     id: number;
   };
 }) {
-  const [review, setReview] = useState("");
-  const [submittedReview, setSubmittedReview] = useState("");
   const [images, setImages] = React.useState([]);
   const {
     data: foodItem,
@@ -136,16 +167,6 @@ export default function FoodItem({
   } = api.menuItemRouter.byId.useQuery(Number(searchParams.id));
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
-  const handleReviewChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    setReview(event.target.value);
-  };
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    setSubmittedReview(review);
-    setReview("");
-  };
   const onChange = (
     imageList: ImageListType,
     addUpdateIndex: number[] | undefined,
@@ -180,7 +201,8 @@ export default function FoodItem({
               <Grid>
                 <Dialog.Root>
                   <Dialog.Trigger>
-                    <h3 className="mt-4">Nutrition | </h3>
+                    <h3 className="mt-4"> Nutritions | </h3>
+                    <DialogNutritions title="Nutritions"/>
                   </Dialog.Trigger>
                 </Dialog.Root>
               </Grid>
@@ -188,6 +210,7 @@ export default function FoodItem({
                 <Dialog.Root>
                   <Dialog.Trigger>
                     <h3 className="mt-4 whitespace-pre"> Ingredients | </h3>
+                    <DialogBox title="Ingredients" children={[foodItem?.ingredients]} />
                   </Dialog.Trigger>
                 </Dialog.Root>
               </Grid>

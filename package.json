@@ -36,6 +36,8 @@
   },
   "prettier": "@menus-for-ucla/prettier-config",
   "dependencies": {
-    "react-images-uploading": "^3.1.7"
+    "install": "^0.13.0",
+    "react-images-uploading": "^3.1.7",
+    "react-nutrition-label": "github:davidgamero/react-nutrition-label"
   }
 }
