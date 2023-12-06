@@ -7,12 +7,25 @@ interface TagProps {
     name: string;
 };
 
-export const Tag: React.FC<TagProps> = ({ name })=>  {
+export const AllergenTag: React.FC<TagProps> = ({ name })=>  {
   return (
     <Chip
-      className="my-2 mr-2 text-sm text-white"
+      className="my-2 mr-2 text-xs text-white"
       label={name}
-      style={{ backgroundColor: "#58a1d1", color: "white" }}
+      style={{ backgroundColor: "#a83258", color: "white" }}
+      size="small"
+      sx={{ borderRadius: 2 }}
+    />
+  );
+}
+
+export const DietaryTag: React.FC<TagProps> = ({ name })=>  {
+  return (
+    <Chip
+      className="my-2 mr-2 text-xs text-white"
+      label={name}
+      style={{ backgroundColor: "#32a86b", color: "white"}}
+      size="small"
       sx={{ borderRadius: 2 }}
     />
   );

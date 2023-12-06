@@ -1,6 +1,7 @@
 {
   "extends": "@menus-for-ucla/tsconfig/base.json",
   "compilerOptions": {
+    "jsx": "react",
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]
