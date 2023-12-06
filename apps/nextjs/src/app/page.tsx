@@ -8,6 +8,7 @@ import { api } from "~/utils/api";
 import Link from 'next/link';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import React from 'react';
 
 interface DiningHallProps {
   title: string;
@@ -18,7 +19,7 @@ interface DiningHallProps {
 const DiningHall: React.FC<DiningHallProps> = ({title, imageUrl, availability, id}) => {
   return( // https://flowbite.com/docs/components/card/
     <Link href={{pathname: "/dining-hall", query: {title: title, id:id}}}>
-      <div className="max-w-sm overflow-hidden shadow-lg bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+      <div className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:shadow-sky-100 max-w-sm overflow-hidden mx-2 mt-8 shadow-lg bg-white border-2 border-violet-800/30 rounded-lg bg-white/40 backdrop-blur">
         <img
           className="rounded-t-lg w-full" 
           src={imageUrl} 
@@ -40,7 +41,7 @@ export default function HomePage() {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-      <main className="flex h-screen flex-col items-center text-black ">
+      <main className="font-serif flex h-screen flex-col items-center text-black bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
         <div className="container mt-12 flex flex-col items-center justify-center gap-4 py-8">
           <h1 className="text-5xl font-normal tracking-tight sm:text-[5rem]">
             Menus for UCLA

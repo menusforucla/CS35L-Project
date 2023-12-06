@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { api } from "~/utils/api";
 import TextField from '@mui/material/TextField';
-
+import '@radix-ui/themes/styles.css';
+import { Button } from "@radix-ui/themes";
 
 export function CreateReviewForm() {
   const context = api.useContext();
@@ -51,8 +52,8 @@ export function CreateReviewForm() {
             onChange={handleReviewChange}
           />
         </div>
-        <div>
-          <button type="submit">Submit</button>
+        <div className="my-2">
+          <Button type="submit" style={{ borderRadius: '5px' }} variant="solid" color="indigo" size="3"><p className="my-2 mx-8">Submit</p></Button>
         </div>
         {error?.data?.code === "UNAUTHORIZED" && (
           <span className="mt-2 text-red-500">

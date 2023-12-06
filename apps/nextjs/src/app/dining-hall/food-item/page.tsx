@@ -2,12 +2,15 @@
 
 import React, { FormEvent, useState } from "react";
 import Image from "next/image";
+import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Unstable_Grid2";
+import * as Accordion from "@radix-ui/react-accordion";
 import * as Dialog from "@radix-ui/react-dialog";
 import ImageUploading, { ImageListType } from "react-images-uploading";
+
 import { api } from "~/utils/api";
 import { CreateReviewForm, PostList } from "../../_components/reviews";
-import { Tag } from "../../_components/tags";
+import { AllergenTag, DietaryTag } from "../../_components/tags";
 import NutritionLabel from "../../../../../../node_modules/react-nutrition-label/src/components/NutritionLabel/index";
 interface ImageUploaderProps {
   images: ImageListType;
@@ -176,26 +179,27 @@ export default function FoodItem({
   };
   console.log(foodItem?.allergens);
   return (
-    <div style={{ backgroundColor: "#f0e9e1" }}>
+    <main className=" bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
       <div
-        className=" m-8 flex rounded-3xl bg-blue-100"
+        className="font-serif m-8 flex rounded-3xl bg-sky-500/20"
         style={{ alignItems: "stretch" }}
       >
         <div className="my-8 ml-52 mr-8 flex-grow">
           <Grid direction={"column"}>
             <Grid>
-              <div>
+              <Grid>
                 <img
-                  className="rounded-3xl"
+                  className="ml-8 rounded-3xl"
                   src="/images/KrustyKrab.webp"
                   alt="Picture of the author"
-                  width="700"
+                  width="700vw"
                   style={{ float: "right" }}
                 />
-                <h1 className="text-align break-words text-8xl font-bold">
+              </Grid>
+              <Grid>
+                <h1 className="text-align break-words text-7xl font-bold">
                   {searchParams.name}
                 </h1>
-              </div>
             </Grid>
             <Grid className="text-sm" container direction="row">
               <Grid>
@@ -206,43 +210,45 @@ export default function FoodItem({
                   </Dialog.Trigger>
                 </Dialog.Root>
               </Grid>
-              <Grid>
-                <Dialog.Root>
-                  <Dialog.Trigger>
-                    <h3 className="mt-4 whitespace-pre"> Ingredients | </h3>
-                    <DialogBox title="Ingredients" children={[foodItem?.ingredients]} />
-                  </Dialog.Trigger>
-                </Dialog.Root>
-              </Grid>
-              <Grid>
-                <Dialog.Root>
-                  <Dialog.Trigger>
-                    <h3 className="mt-4 whitespace-pre">Allergens</h3>
-                  </Dialog.Trigger>
-                  <DialogBox title="Allergens" children={foodItem?.allergens} />
-                </Dialog.Root>
-              </Grid>
+            </Grid>
             </Grid>
             <Grid className="text-lg">
               <p>{foodItem?.description}</p>
             </Grid>
-            <Grid container direction="row">
-              {foodItem?.dietaryPreferences.map((dietaryPreference) => (
-                <Grid key={dietaryPreference.id}>
-                  <Tag name={dietaryPreference.name} />
-                </Grid>
-              ))}
+            <Grid className="mt-4">
+              <div
+                className="flex rounded-lg bg-white p-4"
+                style={{ flexDirection: "column" }}
+              >
+                <div className= "mb-2">
+                  <h2 className="text-lg font-semibold">Ingredients</h2>
+                  <p className="text-sm">{foodItem?.ingredients}</p>
+                </div>
+                <Divider/>
+                
+                <div className="mb-2">
+                  <h2 className="text-lg font-semibold">Allergens</h2>
+                  {foodItem?.allergens.map((allergen) => (
+                    <span key={allergen.id}>
+                      <AllergenTag name={allergen.name} />
+                    </span>
+                  ))}
+                </div>
+                <Divider/>
+
+                <div>
+                  <h2 className="text-lg font-semibold">Dietary Preferences</h2>
+                  {foodItem?.dietaryPreferences.map((dietaryPreference) => (
+                    <span key={dietaryPreference.id}>
+                      <DietaryTag name={dietaryPreference.name} />
+                    </span>
+                  ))}
+                </div>
+              </div>
             </Grid>
           </Grid>
         </div>
       </div>
-      {/*<p><b>INGREDIENTS: </b>{foodItem?.ingredients}</p>
-      <p><b>ALLERGENS: </b>{foodItem?.allergens.map((allergen, index) => (
-        <span key={allergen.id}>{allergen.name}{index < foodItem.allergens.length-1 ? ', ' : ''}</span>
-      ))}</p>
-      <p><b>DIETARY PREFERANCES: </b>{foodItem?.dietaryPreferences.map((dietaryPreference, index) => (
-        <span key={dietaryPreference.id}>{dietaryPreference.name}{index < foodItem.dietaryPreferences.length-1 ? ', ' : ''}</span>
-      ))}</p>*/}
       <div className="w-100 relative mx-52 mt-8 h-72 items-center justify-center">
         <h1 className="text-4xl font-bold">Wanna see more?</h1>
         <h2 className="text-xl font-semibold">
@@ -253,6 +259,6 @@ export default function FoodItem({
         <CreateReviewForm></CreateReviewForm>
         <PostList restaurantId={1}></PostList>
       </div>
-    </div>
+    </main>
   );
 }
