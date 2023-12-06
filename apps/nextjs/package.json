@@ -32,6 +32,7 @@
     "@trpc/next": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
+    "@uploadthing/react": "^6.0.2",
     "hono": "^3.10.2",
     "next": "^14.0.2",
     "react": "18.2.0",
@@ -41,6 +42,7 @@
     "react-simple-star-rating": "^5.1.7",
     "superjson": "2.2.0",
     "swr": "^2.2.4",
+    "uploadthing": "^6.0.4",
     "zod": "^3.22.4"
   },
   "devDependencies": {

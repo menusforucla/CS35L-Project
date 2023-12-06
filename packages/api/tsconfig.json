@@ -1,8 +1,25 @@
 {
   "extends": "@menus-for-ucla/tsconfig/base.json",
   "compilerOptions": {
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "./src/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
-  "include": ["."],
-  "exclude": ["node_modules"]
+  "include": [
+    ".",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
