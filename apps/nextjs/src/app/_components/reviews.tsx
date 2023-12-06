@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
-import { api } from "~/utils/api";
-import TextField from '@mui/material/TextField';
 
+import { useState } from "react";
+import TextField from "@mui/material/TextField";
+
+import { api } from "~/utils/api";
 
 export function CreateReviewForm() {
   const context = api.useContext();
@@ -92,8 +93,7 @@ export function PostList(props: { restaurantId: number }) {
 }
 
 export function PostCard(props: { review: string | null }) {
-  // const context = api.useContext();
-  // const deletePost = api.review.delete.useMutation();
+
 
   return (
     <div className="flex-center w-80 rounded-lg bg-white/10 p-4 transition-all hover:scale-[101%]">

@@ -350,7 +350,7 @@ importers:
         version: 0.18.0
       '@auth/prisma-adapter':
         specifier: ^1.0.8
-        version: 1.0.8(@prisma/client@5.6.0)
+        version: 1.0.8(@prisma/client@5.7.0)
       '@menus-for-ucla/db':
         specifier: workspace:^0.1.0
         version: link:../db
@@ -410,6 +410,9 @@ importers:
       '@menus-for-ucla/tsconfig':
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
+      '@types/node':
+        specifier: ^18.18.9
+        version: 18.18.9
       dotenv-cli:
         specifier: ^7.3.0
         version: 7.3.0
@@ -422,6 +425,9 @@ importers:
       prisma:
         specifier: ^5.6.0
         version: 5.6.0
+      ts-node:
+        specifier: ^10.9.1
+        version: 10.9.1(@types/node@18.18.9)(typescript@5.2.2)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -593,13 +599,13 @@ packages:
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
-  /@auth/prisma-adapter@1.0.8(@prisma/client@5.6.0):
+  /@auth/prisma-adapter@1.0.8(@prisma/client@5.7.0):
     resolution: {integrity: sha512-654aQvvbWtlHKQpsxRKRm+9/V/eMdPH3LCGPqdibL8qxJtrwhvor1fo8ioJF6Xac0PDshNokH40QxoKlpk/Khg==}
     peerDependencies:
       '@prisma/client': '>=2.26.0 || >=3 || >=4 || >=5'
     dependencies:
       '@auth/core': 0.18.0
-      '@prisma/client': 5.6.0(prisma@5.6.0)
+      '@prisma/client': 5.7.0
     transitivePeerDependencies:
       - nodemailer
     dev: false
@@ -3436,6 +3442,17 @@ packages:
     dependencies:
       '@prisma/engines-version': 5.6.0-32.e95e739751f42d8ca026f6b910f5a2dc5adeaeee
       prisma: 5.6.0
+    dev: false
+
+  /@prisma/client@5.7.0:
+    resolution: {integrity: sha512-cZmglCrfNbYpzUtz7HscVHl38e9CrUs31nrVoGUK1nIPXGgt8hT4jj2s657UXcNdQ/jBUxDgGmHyu2Nyrq1txg==}
+    engines: {node: '>=16.13'}
+    requiresBuild: true
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
     dev: false
 
   /@prisma/engines-version@5.6.0-32.e95e739751f42d8ca026f6b910f5a2dc5adeaeee:
