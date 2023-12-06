@@ -98,6 +98,8 @@ export const activityAverageRouter = createTRPCRouter({
 
 function calculateAverage(restaurant: string, mealType: MealType)
 {
+  // converting from MealType to string because the old data processor process JSON files that uses strings as identification. Won't be needed anymore after 
+  // we transition to using the database as the source
   let meal: string
   if (mealType == MealType.BREAKFAST)
   {
@@ -110,6 +112,8 @@ function calculateAverage(restaurant: string, mealType: MealType)
   else{
     meal = "Dinner"
   }
+
+  //get the starting and ending hour of the meal period based on the restaurant and mealperiod 
   const key = restaurant + " " + meal
   const hourMap = new Map<string, number[]>();
   hourMap.set("BruinPlate Breakfast", [7,10])
@@ -133,6 +137,8 @@ function calculateAverage(restaurant: string, mealType: MealType)
   {
       hoursTotal.set(i, [0,0])
   }
+
+  //change process files to whatever function that process data from the database and returns a list of RestaurantData
   const allData:RestaurantData[] = processFiles()
   allData.forEach((data)=>{
       if (data.name == restaurant && data.time >= hours[0] && data.time <= hours[1])
@@ -141,9 +147,12 @@ function calculateAverage(restaurant: string, mealType: MealType)
          hoursTotal.get(data.time)![1] += parseInt(data.percentage)
       }
   })
+
+  //calculating the average of each our based on total hours and total entries
   const hoursAverage : hourAverage[] = [];
   for (let i = hours[0]; i <= hours[1]; i++)
   {
+      //if no entries activity level = -1 to indicate error 
       if (hoursTotal.get(i)![0] == -1)
       {
           hoursAverage.push({hour: i,activityLevel: -1})
