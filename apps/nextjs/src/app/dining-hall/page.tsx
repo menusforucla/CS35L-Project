@@ -202,10 +202,13 @@ export default function DiningHall({
           {reviewsError ? (
             <div>Failed to load reviews.</div>
           ) : (
-            reviews?.map((review) => (
-              <ReviewComponent key={review.id} review={review} />
-            ))
+            reviews?.map((review) => 
+                <ReviewComponent key={review.id} review={review} />
+              )
           )}
+        </div>
+        <div className="mt-[800px]">
+            <Divider className=" bg-violet-500/30" />
         </div>
       </div>
     </main>
