@@ -7,6 +7,7 @@ import Divider from "@mui/material/Divider";
 import type {
   Allergen,
   DietaryPreference,
+  Image,
   MenuItem,
   MenuSection,
   Restaurant,
@@ -20,12 +21,13 @@ import ReviewComponent from "../_components/food-item/review-component";
 import ReviewForm from "../_components/review-form";
 
 export type ReviewWithUser = Review & { user: User };
-export type MenuItemsWithAllergensAndDietPrefs = MenuItem & {
+export type MenuItemsWithAllergensAndDietPrefsAndImages = MenuItem & {
   allergens: Allergen[];
   dietaryPreferences: DietaryPreference[];
+  images: Image[];
 };
 type MenuSectionsWithMenuItems = MenuSection & {
-  menuItems: MenuItemsWithAllergensAndDietPrefs[];
+  menuItems: MenuItemsWithAllergensAndDietPrefsAndImages[];
 };
 type RestaurantWithMenuSections = Restaurant & {
   menuSections: MenuSectionsWithMenuItems[];
@@ -139,15 +141,16 @@ export default function DiningHall({
                 columns={{ xs: 4, sm: 8, md: 12 }}
               >
                 {menuSection.menuItems.map((menuItem) => (
-                  <Grid item xs={2} sm={4} md={4} key={menuItem.id}>
+                  <Grid item xs={3} sm={3} md={3} key={menuItem.id}>
                     <FoodItem
                       name={menuItem.name}
                       description={menuItem.description}
                       id={menuItem.id}
-                      avgRating={5}
+                      avgRating={Math.floor(Math.random() * 5) + 1}
                       allergens={menuItem.allergens}
                       dietPrefs={menuItem.dietaryPreferences}
                       restaurantId={searchParams.restaurantId}
+                      imageUrl={menuItem.images[0]?.url}
                     />
                   </Grid>
                 ))}
@@ -166,7 +169,10 @@ export default function DiningHall({
           <div className="my-4">
             <Divider className="bg-violet-500/30" />
           </div>
-          <ReviewForm restaurantId={searchParams.restaurantId} menuItemIds={[]} />
+          <ReviewForm
+            restaurantId={searchParams.restaurantId}
+            menuItemIds={[]}
+          />
 
           {reviewsError ? (
             <div>Failed to load reviews.</div>

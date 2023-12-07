@@ -14,6 +14,7 @@ interface FoodItemsProps {
   allergens?: Allergen[];
   dietPrefs?: DietaryPreference[];
   restaurantId: number;
+  imageUrl: string | undefined;
 }
 
 export const FoodItem: React.FC<FoodItemsProps> = ({
@@ -24,10 +25,8 @@ export const FoodItem: React.FC<FoodItemsProps> = ({
   allergens,
   dietPrefs,
   restaurantId,
+  imageUrl,
 }) => {
-  const calculateWidth = (name: string) => {
-    return `${100 + 12 * name.length}px`;
-  };
   const allergenArray = Object.values(allergens ?? {});
   const dietPrefsArray = Object.values(dietPrefs ?? {});
 
@@ -38,21 +37,38 @@ export const FoodItem: React.FC<FoodItemsProps> = ({
         query: { name: name, restaurantId: restaurantId, menuItemId: id },
       }}
     >
-      <div className="rounded-lg border-2 border-blue-400/50 bg-sky-500/30 p-2 shadow-sm backdrop-blur transition-colors hover:bg-sky-200">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">{name}</h2>
-          <span className="mr-2  flex items-center text-lg font-semibold">
-            <StarIcon style={{ fill: "#D2B41A", marginTop: "-1px" }} />
-            {avgRating}
-          </span>
+      <div className="flex h-60 rounded-lg border-2 border-blue-400/50 bg-sky-500/30 p-2 shadow-sm backdrop-blur transition-colors hover:bg-sky-200">
+        <img
+          className="h-full w-1/2 rounded-l-lg object-cover"
+          src={imageUrl || "/images/default-food.jpg"}
+          alt={name}
+        />
+        <div className="flex w-1/2 flex-col justify-between p-4">
+          <div>
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold">{name}</h2>
+              <span className="flex items-center text-lg font-semibold">
+                <StarIcon style={{ fill: "#D2B41A", marginTop: "-1px" }} />
+                {avgRating}
+              </span>
+            </div>
+            <p className="text-base font-semibold text-gray-700">
+              {description}
+            </p>
+          </div>
+          <div>
+            <div>
+              {allergenArray.map((allergen) => (
+                <AllergenTag key={allergen.id} name={allergen.name} />
+              ))}
+            </div>
+            <div>
+              {dietPrefsArray.map((dietPref) => (
+                <DietaryTag key={dietPref.id} name={dietPref.name} />
+              ))}
+            </div>
+          </div>
         </div>
-        <p className="text-base font-semibold text-gray-700">{description}</p>
-        {allergenArray.map((allergen) => (
-          <AllergenTag key={allergen.id} name={allergen.name} />
-        ))}
-        {dietPrefsArray.map((dietPref) => (
-          <DietaryTag key={dietPref.id} name={dietPref.name} />
-        ))}
       </div>
     </Link>
   );
