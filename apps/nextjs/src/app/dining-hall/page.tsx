@@ -174,7 +174,7 @@ export default function DiningHall({
             <h2 className="mb-2 mt-5 text-2xl font-bold">
               Same time last week
             </h2>
-            <div style={{ width: "600px", height: "300px" }}>
+            <div style={{ width: "700px", height: "350px" }}>
               <DiningHallActivity />
             </div>
             <h3 className="mb-2 mt-5 text-xl font-medium">
