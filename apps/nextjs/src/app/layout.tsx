@@ -3,10 +3,10 @@ import { Inter } from "next/font/google";
 
 import "~/styles/globals.css";
 
+import React from "react";
 import { headers } from "next/headers";
 
 import { TRPCReactProvider } from "./providers";
-import React from "react";
 
 const fontSans = Inter({
   subsets: ["latin"],
