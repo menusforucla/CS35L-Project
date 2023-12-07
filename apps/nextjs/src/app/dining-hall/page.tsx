@@ -11,6 +11,7 @@ import type {
   Image,
   MenuItem,
   MenuSection,
+  NutritionFacts,
   Restaurant,
   Review,
   User,
@@ -27,6 +28,7 @@ export type MenuItemsWithAllergensAndDietPrefsAndImages = MenuItem & {
   allergens: Allergen[];
   dietaryPreferences: DietaryPreference[];
   images: Image[];
+  nutritionFacts: NutritionFacts;
 };
 type MenuSectionsWithMenuItems = MenuSection & {
   menuItems: MenuItemsWithAllergensAndDietPrefsAndImages[];
@@ -200,10 +202,13 @@ export default function DiningHall({
           {reviewsError ? (
             <div>Failed to load reviews.</div>
           ) : (
-            reviews?.map((review) => (
-              <ReviewComponent key={review.id} review={review} />
-            ))
+            reviews?.map((review) => 
+                <ReviewComponent key={review.id} review={review} />
+              )
           )}
+        </div>
+        <div className="mt-[800px]">
+            <Divider className=" bg-violet-500/30" />
         </div>
       </div>
     </main>

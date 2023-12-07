@@ -34,5 +34,8 @@
       "@auth/core": "0.18.0"
     }
   },
-  "prettier": "@menus-for-ucla/prettier-config"
+  "prettier": "@menus-for-ucla/prettier-config",
+  "dependencies": {
+    "react-nutrition-label": "github:davidgamero/react-nutrition-label"
+  }
 }

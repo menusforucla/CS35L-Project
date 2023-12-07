@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Star from "@mui/icons-material/Star";
 
 interface StarRatingProps {
-  onRating: (rating: number) => void;
+  onRating?: (rating: number) => void;
+  initialRating?: number;
 }
 
-export default function StarRating({ onRating }: StarRatingProps) {
+export default function StarRating({ onRating, initialRating }: StarRatingProps) {
   const [rating, setRating] = useState(0);
 
+  useEffect(() => {
+    if (initialRating !== undefined) {
+      setRating(initialRating);
+    }
+  }, [initialRating]);
+
   const handleSetRating = (newRating: number) => {
-    setRating(newRating);
+    if (initialRating == undefined) {
+      setRating(newRating);
+    }
     if (onRating) {
       onRating(newRating);
     }
@@ -23,6 +32,7 @@ export default function StarRating({ onRating }: StarRatingProps) {
           type="button"
           className="focus:outline-none"
           onClick={() => handleSetRating(star)}
+          disabled={initialRating !== undefined}
         >
           {star <= rating ? (
             <Star className="h-6 w-6 text-yellow-400" />
