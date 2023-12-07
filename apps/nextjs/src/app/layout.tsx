@@ -36,9 +36,9 @@ export default function Layout(props: { children: React.ReactNode }) {
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="hidden md:block">
-                  <div className="ml-1 flex items-baseline space-x-5 font-mono font-bold">
+                  <div className="ml-1 flex items-baseline space-x-5 font-mono ">
                     <Link href="/" passHref>
-                      <button className="rounded-md px-3 py-2 text-lg text-black hover:text-white">
+                      <button className="rounded-md font-medium px-3 py-2 text-lg text-black hover:text-white">
                         Home
                       </button>
                     </Link>

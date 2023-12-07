@@ -35,30 +35,30 @@ export default function DiningHallActivity() {
         ticks: {
           color: 'black',
           font: {
-            size: 17, // Set font size for x-axis ticks
+            size: 17, 
           },
         }
       },
       x: {
         ticks: {
-          color: 'black', // Set font color for x-axis ticks
+          color: 'black', 
           font: {
-            size: 17, // Set font size for x-axis ticks
-          },    // Set font size for x-axis ticks
+            size: 17, 
+          },   
         },
       },
     },
     plugins: {
       legend: {
         labels: {
-          color: 'black', // Set font color for legend labels
+          color: 'black', 
           font: {
-            size: 17, // Set font size for x-axis ticks
+            size: 17, 
           },
         },
       },
     },
-    responsive: true, // Ensure that the chart is responsive
+    responsive: true, 
     maintainAspectRatio: false,
   };
   return <Bar data={data} options={options}/>;
