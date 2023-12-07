@@ -48,7 +48,7 @@ To get it running, follow the steps below:
 
 - [Node.js](https://nodejs.org/en)
 - [pnpm](https://pnpm.io)
-- [Prisma](https://www.prisma.io/client) or a different MySQL Database
+- [MySQL](https://www.mysql.com/)
 - [uploadthing](https://uploadthing.com/) image uploading service
 - [OAuth 2.0 credentials](https://console.developers.google.com/apis/credentials)
 
@@ -72,12 +72,6 @@ pnpm db:push
 
 1. Run `pnpm --filter nextjs dev` at the project root folder. This should run the website on http://localhost:3000.
 
-
-### Does this pattern leak backend code to my client applications?
-
-No, it does not. The `api` package should only be a production dependency in the Next.js application where it's served. The Expo app, and all other apps you may add in the future, should only add the `api` package as a dev dependency. This lets you have full typesafety in your client applications, while keeping your backend code safe.
-
-If you need to share runtime code between the client and server, such as input validation schemas, you can create a separate `shared` package for this and import it on both sides.
 
 ## Deployment
 
