@@ -8,6 +8,7 @@ import "react-circular-progressbar/dist/styles.css";
 
 import React from "react";
 import { Text, Theme } from "@radix-ui/themes";
+
 import { DiningHall } from "./_components/home/dining-hall";
 
 const restaurantImageMapping = {
@@ -18,10 +19,10 @@ const restaurantImageMapping = {
 
 export default function HomePage() {
   const { data: restaurants, error, isLoading } = api.restaurant.all.useQuery();
-  
+
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
-  
+
   return (
     <Theme>
       <main className="flex h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-300 via-blue-200 to-yellow-100 text-black">
@@ -41,7 +42,13 @@ export default function HomePage() {
               restaurant.name == "Epic at Ackerman" ? null : (
                 <DiningHall
                   key={index}
-                  title={restaurant.name}
+                  title={
+                    restaurant.name == "BruinPlate"
+                      ? "Bruin Plate"
+                      : restaurant.name == "DeNeve"
+                        ? "De Neve"
+                        : restaurant.name
+                  }
                   imageUrl={restaurantImageMapping[restaurant.name]}
                   availability={restaurant.currentActivityLevel}
                   id={restaurant.id}
@@ -49,21 +56,6 @@ export default function HomePage() {
               ),
             )}
           </div>
-          
-        </div>
-        <div className="container mt-12 flex" >
-
-        <img
-        src="/image/bplate.webp"
-        alt="Bear Image"
-        style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          width: '100px',
-          height: 'auto',
-        }}
-        />
         </div>
       </main>
     </Theme>
