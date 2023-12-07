@@ -34,6 +34,7 @@ export default function HomePage() {
           <Text size="9" style={{ fontFamily: 'Anton, sans-serif', fontWeight: 'bold', color: '#0192c6' }}>Menus for UCLA</Text>
           <div className="flex w-full justify-around">
             {restaurants?.map((restaurant, index: number) => (
+              restaurant.name == "Epic at Ackerman" ? null : (
               <DiningHall
                 key={index}
                 title={restaurant.name}
@@ -41,6 +42,7 @@ export default function HomePage() {
                 availability={restaurant.currentActivityLevel}
                 id={restaurant.id}
               />
+              )
             ))}
           </div>
         </div>

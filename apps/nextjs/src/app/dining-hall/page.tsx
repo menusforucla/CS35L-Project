@@ -78,7 +78,7 @@ export default function DiningHall({
       width: "100%",
       height: "33vh",
       objectFit: "cover",
-      objectPosition: "100% 45%",
+      objectPosition: "100% 40%",
       filter: "brightness(0.75)",
     }}
   />
