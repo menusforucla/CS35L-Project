@@ -40,7 +40,6 @@ export default function HomePage() {
           </div>
         </div>
       </main>
-      <ThemePanel />
     </Theme>
   );
 }
