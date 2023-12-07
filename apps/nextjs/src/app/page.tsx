@@ -7,16 +7,13 @@ import { api } from "~/utils/api";
 import "react-circular-progressbar/dist/styles.css";
 
 import React from "react";
-import Link from "next/link";
 import { Text, Theme } from "@radix-ui/themes";
-import { useState } from 'react';
 import { DiningHall } from "./_components/home/dining-hall";
 
 const restaurantImageMapping = {
   Epicuria: "/images/epic1.webp",
   DeNeve: "/images/deneve1.webp",
   BruinPlate: "/images/bplate1.webp",
-  // Add more mappings as needed
 };
 
 export default function HomePage() {
@@ -57,14 +54,14 @@ export default function HomePage() {
         <div className="container mt-12 flex" >
 
         <img
-        src="/image/bplate.webp"  // Replace with the actual path to your bear image
+        src="/image/bplate.webp"
         alt="Bear Image"
         style={{
           position: 'fixed',
           bottom: 0,
           left: 0,
-          width: '100px',  // Adjust the size as needed
-          height: 'auto',  // Maintain aspect ratio
+          width: '100px',
+          height: 'auto',
         }}
         />
         </div>

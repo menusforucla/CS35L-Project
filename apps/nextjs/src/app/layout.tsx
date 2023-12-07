@@ -33,13 +33,10 @@ export default function Layout(props: { children: React.ReactNode }) {
       <body className={["font-sans", fontSans.variable].join(" ")}>
         <nav className="fixed inset-x-0 top-0 z-50 bg-white/30 backdrop-blur-lg">
           <div className="mx-auto max-w-7xl px-0 sm:px-0 lg:px-0">
-            {" "}
-            {/* Adjusted padding here */}
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="hidden md:block">
                   <div className="ml-1 flex items-baseline space-x-4">
-                    {/* Navigation Links as Buttons */}
                     <Link href="/" passHref>
                       <button className="rounded-md px-3 py-2 text-lg font-medium text-black hover:text-white">
                         Home
