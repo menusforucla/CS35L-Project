@@ -39,9 +39,6 @@ tooling
   |   └─ shared tailwind configuration
   └─ typescript
       └─ shared tsconfig you can extend from
-```
-
-> In this template, we use `@menus-for-ucla` as a placeholder for package names. As a user, you might want to replace it with your own organization or project name. You can use find-and-replace to change all the instances of `@menus-for-ucla` to something like `@my-company` or `@project-name`.
 
 ## Quick Start
 
@@ -100,19 +97,13 @@ pnpm db:push
 
 4. In another terminal window, run `pnpm --filter expo dev` at the project root folder. This command runs the Android application in an emulator.
 
-### When it's time to add a new package
-
-To add a new package, simply run `pnpm turbo gen init` in the monorepo root. This will prompt you for a package name as well as if you want to install any dependencies to the new package (of course you can also do this yourself later).
-
-The generator sets up the `package.json`, `tsconfig.json` and a `index.ts`, as well as configures all the necessary configurations for tooling around your package such as formatting, linting and typechecking. When the package is created, you're ready to go build out the package.
-
 ### Does this pattern leak backend code to my client applications?
 
 No, it does not. The `api` package should only be a production dependency in the Next.js application where it's served. The Expo app, and all other apps you may add in the future, should only add the `api` package as a dev dependency. This lets you have full typesafety in your client applications, while keeping your backend code safe.
 
 If you need to share runtime code between the client and server, such as input validation schemas, you can create a separate `shared` package for this and import it on both sides.
 
-## Deployment (worry about this later)
+## Deployment
 
 ### Next.js
 
