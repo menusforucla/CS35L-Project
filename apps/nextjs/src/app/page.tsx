@@ -45,6 +45,21 @@ export default function HomePage() {
               )
             ))}
           </div>
+          
+        </div>
+        <div className="container mt-12 flex" >
+
+        <img
+        src="/image/bplate.webp"  // Replace with the actual path to your bear image
+        alt="Bear Image"
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          width: '100px',  // Adjust the size as needed
+          height: 'auto',  // Maintain aspect ratio
+        }}
+        />
         </div>
       </main>
     </Theme>

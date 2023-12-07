@@ -145,7 +145,8 @@ export default function FoodItem({
                   onClientUploadComplete={(res) => {
                     // Do something with the response
                     console.log("Files: ", res);
-                    alert("Image uploaded successfully!");
+                    //alert("Image uploaded successfully!");
+                    window.location.reload();
                     res.forEach((file) => {
                       createImage.mutate({
                         menuItemId: Number(searchParams.menuItemId),
@@ -161,12 +162,13 @@ export default function FoodItem({
                 />
               </div>
             </div>
-            <div className="m-10 flex-1">
+            <div className="m-10 flex-1 items-center justify-center max-w-xxl max-h-xxl">
               {menuItem?.images && menuItem.images.length > 0 ? (
                 menuItem.images.map((image: Image, index) => (
+                  
                   <img
                     key={index}
-                    className="w-full rounded-3xl rounded-lg object-cover"
+                    className="rounded-3xl rounded-lg object-cover max-w-xl max-h-l mb-4"
                     src={image.url}
                     alt="Author"
                   />
