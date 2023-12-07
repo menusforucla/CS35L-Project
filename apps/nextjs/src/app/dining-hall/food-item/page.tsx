@@ -162,13 +162,13 @@ export default function FoodItem({
                 />
               </div>
             </div>
-            <div className="m-10 flex-1 items-center justify-center max-w-xxl max-h-xxl">
+            <div className="m-10 flex-1 items-center justify-center max-h-xxl">
               {menuItem?.images && menuItem.images.length > 0 ? (
                 menuItem.images.map((image: Image, index) => (
                   
                   <img
                     key={index}
-                    className="rounded-3xl rounded-lg object-cover max-w-xl max-h-l mb-4"
+                    className="w-full rounded-3xl rounded-lg object-cover max-w-xl max-h-l mb-4"
                     src={image.url}
                     alt="Author"
                   />
