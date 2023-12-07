@@ -25,7 +25,7 @@ export const DiningHall: React.FC<DiningHallProps> = ({
       <div className="hover:scale-102 mx-2 mt-8 max-w-sm overflow-hidden rounded-lg border-2 border-violet-800/30 bg-white bg-white/40 shadow-lg backdrop-blur transition ease-in-out hover:-translate-y-1 hover:shadow-sky-100">
         <img className="w-full rounded-t-lg" src={imageUrl} alt={title} />
         <div className="px-4 py-4">
-          <Text weight="medium" as="div" size="8" align="center">
+          <Text weight="medium" as="div" size="8" align="center" >
             {title}
           </Text>
           <div className="mt-5">

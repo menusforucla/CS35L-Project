@@ -38,10 +38,10 @@ export default function Layout(props: { children: React.ReactNode }) {
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="hidden md:block">
-                  <div className="ml-1 flex items-baseline space-x-4">
+                  <div className="ml-1 flex items-baseline space-x-5 font-mono font-bold">
                     {/* Navigation Links as Buttons */}
                     <Link href="/" passHref>
-                      <button className="rounded-md px-3 py-2 text-lg font-medium text-black hover:text-white">
+                      <button className="rounded-md px-3 py-2 text-lg text-black hover:text-white">
                         Home
                       </button>
                     </Link>
@@ -66,7 +66,7 @@ export default function Layout(props: { children: React.ReactNode }) {
                       passHref
                     >
                       <button className="rounded-md px-3 py-2 text-lg font-medium text-black  hover:text-white">
-                        DeNeve
+                        De Neve
                       </button>
                     </Link>
                   </div>

@@ -71,7 +71,7 @@ export default function DiningHall({
   }, [restaurantReviews]);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-300 via-blue-200 to-yellow-50">
+    <main className="font-sans min-h-screen bg-gradient-to-br from-blue-300 via-blue-200 to-yellow-50">
       <div className="relative">
         {restaurant?.name === "Epicuria" ? (
           <img
@@ -114,7 +114,7 @@ export default function DiningHall({
           />
         ) : null}
         <h1
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-5xl font-bold"
+          className="font-serif absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-5xl font-bold"
           style={{ color: "white" }}
         >
           {searchParams.title}
@@ -128,9 +128,9 @@ export default function DiningHall({
         ) : (
           <div>
             {restaurant?.menuSections.map((menuSection) => (
-              <div key={menuSection.id} className="mb-5">
-                <h2
-                  className="mb-2 mt-10 text-4xl font-bold"
+              <div key={menuSection.id} className="mb-5 font-sans">
+                <h2 
+                  className="mb-2 mt-10 text-4xl font-bold font-serif"
                   style={{ color: "#0E0E0E" }}
                 >
                   {menuSection.name}
@@ -176,7 +176,7 @@ export default function DiningHall({
             <h2 className="mb-2 mt-5 text-2xl font-bold">
               Same time last week
             </h2>
-            <div style={{ width: "700px", height: "350px" }}>
+            <div style={{ width: "1000px", height: "350px" }}>
               <DiningHallActivity />
             </div>
             <h3 className="mb-2 mt-5 text-xl font-medium">
