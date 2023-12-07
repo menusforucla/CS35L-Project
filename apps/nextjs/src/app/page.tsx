@@ -21,11 +21,11 @@ export default function HomePage() {
     <Theme>
       <main className="flex h-screen flex-col items-center bg-gradient-to-br from-blue-300 via-blue-200 to-yellow-100 text-black">
         <div className="container mt-12 flex flex-col items-center justify-center gap-4 py-8">
-          {/* <Link href="/auth">
+          <Link href="/auth">
             <button className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20">
               Sign In
             </button>
-          </Link> */}
+          </Link>
           <Text size="9">Menus for UCLA</Text>
           <div className="flex w-full justify-around">
             {restaurants?.map((restaurant, index: number) => (

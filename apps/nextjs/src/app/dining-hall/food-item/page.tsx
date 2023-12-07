@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import * as Accordion from "@radix-ui/react-accordion";
-import { UploadButton } from "@uploadthing/react";
 
 import { api } from "~/utils/api";
+import { UploadButton } from "~/utils/uploadthing";
 import { AllergenTag, DietaryTag } from "../../_components/tags";
 
 export default function FoodItem({

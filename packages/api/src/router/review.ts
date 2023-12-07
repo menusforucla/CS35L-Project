@@ -10,13 +10,14 @@ const ImageSchema = z.object({
 const ReviewSchema = z.object({
   rating: z.number(),
   review: z.string(),
-  images: z.array(ImageSchema),
+  images: z.array(ImageSchema).optional(),
   restaurantId: z.number(),
   menuItemIds: z.array(z.number()).optional(),
 });
 
 export const reviewRouter = createTRPCRouter({
   create: protectedProcedure.input(ReviewSchema).mutation(({ ctx, input }) => {
+    console.log(input);
     return ctx.prisma.review.create({
       data: {
         rating: input.rating,
