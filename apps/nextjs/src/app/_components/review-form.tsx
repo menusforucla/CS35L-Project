@@ -24,15 +24,8 @@ export default function ReviewForm({
     console.log(review);
     console.log(rating);
     if (review.length > 0 && rating != null) {
-      console.log({
-        restaurantId: restaurantId,
-        rating: rating,
-        review: review,
-        menuItemIds: menuItemIds,
-        images: [],
-      });
       createReview.mutate({
-        restaurantId: restaurantId,
+        restaurantId: Number(restaurantId),
         rating: rating,
         review: review,
         menuItemIds: menuItemIds,
@@ -56,10 +49,7 @@ export default function ReviewForm({
         value={review}
         onChange={(e) => setReview(e.target.value)}
       />
-      <Button
-        onClick={handleSubmit}
-        className="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-      >
+      <Button className="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
         Submit Review
       </Button>
     </form>
