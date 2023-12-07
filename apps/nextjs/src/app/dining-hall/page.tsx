@@ -69,16 +69,47 @@ export default function DiningHall({
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-300 via-blue-200 to-yellow-50">
       <div className="relative">
-        <img
-          className="blur-sm brightness-50"
-          src={"/images/KrustyKrab.webp"}
-          alt="Krusty Krab"
-          style={{
-            width: "100%",
-            height: "33vh",
-            objectFit: "cover",
-          }}
-        />
+      {restaurant?.name === "Epicuria" ? (
+  <img
+    className="blur-sm"
+    src={"/images/epic.webp"}
+    alt="Image 1"
+    style={{
+      width: "100%",
+      height: "33vh",
+      objectFit: "cover",
+      objectPosition: "100% 45%",
+      filter: "brightness(0.75)",
+    }}
+  />
+) : restaurant?.name === "DeNeve" ? (
+  <img
+    className="brightness-30"
+    src={"/images/deneve.webp"}
+    alt="Image 2"
+    style={{
+      width: "100%",
+      height: "33vh",
+      objectFit: "cover",
+      objectPosition: "75% 70%",
+      filter: "brightness(0.75)",
+    }}
+  />
+) : restaurant?.name === "BruinPlate" ? (
+  <img
+    className="brightness-30"
+    src={"/images/bplate.webp"}
+    alt="Image 3"
+    style={{
+      width: "100%",
+      height: "33vh",
+      objectFit: "cover",
+      objectPosition: "75% 60%",
+      filter: "brightness(0.75)",
+      
+    }}
+  />
+) : null}
         <h1
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-5xl font-bold"
           style={{ color: "white" }}
