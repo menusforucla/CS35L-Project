@@ -9,7 +9,7 @@ import "react-circular-progressbar/dist/styles.css";
 import React from "react";
 import Link from "next/link";
 import { Text, Theme } from "@radix-ui/themes";
-
+import { useState } from 'react';
 import { DiningHall } from "./_components/home/dining-hall";
 
 const restaurantImageMapping = {
@@ -18,11 +18,13 @@ const restaurantImageMapping = {
   BruinPlate: "/images/bplate1.webp",
   // Add more mappings as needed
 };
+
 export default function HomePage() {
   const { data: restaurants, error, isLoading } = api.restaurant.all.useQuery();
+  
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
-
+  
   return (
     <Theme>
       <main className="flex h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-300 via-blue-200 to-yellow-100 text-black">

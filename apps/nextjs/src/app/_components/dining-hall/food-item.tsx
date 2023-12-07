@@ -37,7 +37,7 @@ export const FoodItem: React.FC<FoodItemsProps> = ({
         query: { name: name, restaurantId: restaurantId, menuItemId: id },
       }}
     >
-      <div className="flex h-60 rounded-lg border-2 border-blue-400/50 bg-sky-500/30 p-2 shadow-sm backdrop-blur transition-colors hover:bg-sky-200">
+      <div className="flex overflow-hidden h-60 rounded-lg border-2 border-blue-400/50 bg-sky-500/30 p-2 shadow-sm backdrop-blur transition-colors hover:bg-sky-200">
         <img
           className="h-full w-1/2 rounded-l-lg object-cover"
           src={imageUrl ?? "/images/default-food.jpg"}

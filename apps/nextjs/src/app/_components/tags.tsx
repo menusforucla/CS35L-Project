@@ -10,7 +10,7 @@ interface TagProps {
 export const AllergenTag: React.FC<TagProps> = ({ name })=>  {
   return (
     <Chip
-      className="my-2 mr-2 text-xs text-white"
+      className="mb-1 ml-1 text-xs text-white"
       label={name}
       style={{ backgroundColor: "#a83258", color: "white" }}
       size="small"

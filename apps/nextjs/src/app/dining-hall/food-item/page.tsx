@@ -7,15 +7,18 @@ import "@uploadthing/react/styles.css";
 
 import { Image } from "@menus-for-ucla/db";
 
+import NutritionLabel from "../../../../../../node_modules/react-nutrition-label/src/components/NutritionLabel/index";
 import ReviewComponent from "~/app/_components/food-item/review-component";
 import ReviewForm from "~/app/_components/review-form";
 import { api } from "~/utils/api";
 import { UploadButton } from "~/utils/uploadthing";
 import { AllergenTag, DietaryTag } from "../../_components/tags";
+import * as Dialog from '@radix-ui/react-dialog';
 import type {
   MenuItemsWithAllergensAndDietPrefsAndImages,
   ReviewWithUser,
 } from "../page";
+import { DialogBox } from "~/app/_components/dialog-box";
 
 export default function FoodItem({
   searchParams,
@@ -111,6 +114,39 @@ export default function FoodItem({
               </div>
 
               <div>
+                  <Dialog.Root>
+                  <Dialog.Trigger>
+                  <strong className="relative after:block after:content-[''] after:absolute after:h-[3px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-left">Nutrition Facts</strong>
+                      </Dialog.Trigger>
+                          <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+                            <Dialog.Content
+                              className="flex justify-center absolute left-1/2 top-1/2 w-fit -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-white p-4 shadow-lg"
+                              style={{ width: "30rem" }}
+                            >
+                    {menuItem?.nutritionFacts ? ( 
+                        <NutritionLabel 
+                        servingSize={foodItem.nutritionFacts.servingSize} 
+                        saturatedFat={foodItem.nutritionFacts.saturatedFat} 
+                        sodium={foodItem.nutritionFacts.sodium} 
+                        servingsPerContainer={foodItem.nutritionFacts.servingsPerContainer} 
+                        calories={foodItem.nutritionFacts.calories} 
+                        caloriesFromFat={foodItem.nutritionFacts.caloriesFromFat} 
+                        totalFat={foodItem.nutritionFacts.totalFat}
+                        transFat={foodItem.nutritionFacts.transFat}
+                        cholesterol={foodItem.nutritionFacts.cholesterol}
+                        totalCarbohydrate={foodItem.nutritionFacts.totalCarbohydrate}
+                        dietaryFiber={foodItem.nutritionFacts.dietaryFiber}
+                        sugars={foodItem.nutritionFacts.sugars}
+                        protein={foodItem.nutritionFacts.protein}
+                        vitamins={[foodItem.nutritionFacts.vitamins]}/>      
+                      )
+                     : (
+                      <p>Not Available</p>
+                    )}
+                           </Dialog.Content>
+                      </Dialog.Root>
+              </div>
+              <div>
                 <h2
                   className="pb-2 pt-10 text-4xl font-bold"
                   style={{ color: "#0E0E0E" }}
@@ -162,13 +198,13 @@ export default function FoodItem({
                 />
               </div>
             </div>
-            <div className="m-10 flex-1 items-center justify-center max-w-xxl max-h-xxl">
+            <div className="m-10 flex-1 items-center justify-center max-h-xxl">
               {menuItem?.images && menuItem.images.length > 0 ? (
                 menuItem.images.map((image: Image, index) => (
                   
                   <img
                     key={index}
-                    className="rounded-3xl rounded-lg object-cover max-w-xl max-h-l mb-4"
+                    className="w-full rounded-3xl rounded-lg object-cover max-w-xl max-h-l mb-4"
                     src={image.url}
                     alt="Author"
                   />
