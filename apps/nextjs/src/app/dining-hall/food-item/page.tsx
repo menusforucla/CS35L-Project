@@ -5,20 +5,21 @@ import { Divider } from "@mui/material";
 
 import "@uploadthing/react/styles.css";
 
+import * as Dialog from "@radix-ui/react-dialog";
+
 import { Image } from "@menus-for-ucla/db";
 
-import NutritionLabel from "../../../../../../node_modules/react-nutrition-label/src/components/NutritionLabel/index";
+import { DialogBox } from "~/app/_components/dialog-box";
 import ReviewComponent from "~/app/_components/food-item/review-component";
 import ReviewForm from "~/app/_components/review-form";
 import { api } from "~/utils/api";
 import { UploadButton } from "~/utils/uploadthing";
 import { AllergenTag, DietaryTag } from "../../_components/tags";
-import * as Dialog from '@radix-ui/react-dialog';
+import NutritionLabel from "../../../../../../node_modules/react-nutrition-label/src/components/NutritionLabel/index";
 import type {
   MenuItemsWithAllergensAndDietPrefsAndImages,
   ReviewWithUser,
 } from "../page";
-import { DialogBox } from "~/app/_components/dialog-box";
 
 export default function FoodItem({
   searchParams,
@@ -60,7 +61,7 @@ export default function FoodItem({
           <div>Failed to load menu item information.</div>
         ) : (
           <>
-            <div className="flex-1 space-y-4 pr-10">
+            <div className="mt-10 flex-1 space-y-4 pr-10">
               <div>
                 <h1 className="text-align break-words text-7xl font-bold">
                   {searchParams.name}
@@ -75,13 +76,14 @@ export default function FoodItem({
                 >
                   Details
                 </h2>
-                <Divider className="bg-violet-500/30" />
-                <div>
+                <Divider className="mb-5 bg-violet-500/30" />
+
+                <div className="mb-5 mt-5">
                   <strong>Ingredients</strong>
                   <p>{menuItem?.ingredients}</p>
                 </div>
 
-                <div>
+                <div className="mb-5">
                   <strong>Allergens</strong>
                   <div>
                     {menuItem?.allergens && menuItem.allergens.length > 0 ? (
@@ -96,7 +98,7 @@ export default function FoodItem({
                   </div>
                 </div>
 
-                <div>
+                <div className="mb-5">
                   <strong>Dietary Preferences</strong>
                   <div>
                     {menuItem?.dietaryPreferences &&
@@ -114,37 +116,43 @@ export default function FoodItem({
               </div>
 
               <div>
-                  <Dialog.Root>
+                <Dialog.Root>
                   <Dialog.Trigger>
-                  <strong className="relative after:block after:content-[''] after:absolute after:h-[3px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-left">Nutrition Facts</strong>
-                      </Dialog.Trigger>
-                          <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-                            <Dialog.Content
-                              className="flex justify-center absolute left-1/2 top-1/2 w-fit -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-white p-4 shadow-lg"
-                              style={{ width: "30rem" }}
-                            >
-                    {menuItem?.nutritionFacts ? ( 
-                        <NutritionLabel 
-                        servingSize={foodItem.nutritionFacts.servingSize} 
-                        saturatedFat={foodItem.nutritionFacts.saturatedFat} 
-                        sodium={foodItem.nutritionFacts.sodium} 
-                        servingsPerContainer={foodItem.nutritionFacts.servingsPerContainer} 
-                        calories={foodItem.nutritionFacts.calories} 
-                        caloriesFromFat={foodItem.nutritionFacts.caloriesFromFat} 
-                        totalFat={foodItem.nutritionFacts.totalFat}
-                        transFat={foodItem.nutritionFacts.transFat}
-                        cholesterol={foodItem.nutritionFacts.cholesterol}
-                        totalCarbohydrate={foodItem.nutritionFacts.totalCarbohydrate}
-                        dietaryFiber={foodItem.nutritionFacts.dietaryFiber}
-                        sugars={foodItem.nutritionFacts.sugars}
-                        protein={foodItem.nutritionFacts.protein}
-                        vitamins={[foodItem.nutritionFacts.vitamins]}/>      
-                      )
-                     : (
+                    <strong className="relative after:absolute after:block after:h-[3px] after:w-full after:origin-left after:scale-x-0 after:bg-black after:transition after:duration-300 after:content-[''] after:hover:scale-x-100">
+                      Click to View Nutrition Facts
+                    </strong>
+                  </Dialog.Trigger>
+                  <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+                  <Dialog.Content
+                    className="absolute left-1/2 top-1/2 flex w-fit -translate-x-1/2 -translate-y-1/2 transform justify-center rounded-lg bg-white p-4 shadow-lg"
+                    style={{ width: "30rem" }}
+                  >
+                    {menuItem?.nutritionFacts ? (
+                      <NutritionLabel
+                        servingSize={menuItem.nutritionFacts.servingSize}
+                        saturatedFat={menuItem.nutritionFacts.saturatedFat}
+                        sodium={menuItem.nutritionFacts.sodium}
+                        servingsPerContainer={
+                          menuItem.nutritionFacts.servingSize
+                        }
+                        calories={menuItem.nutritionFacts.calories}
+                        caloriesFromFat={menuItem.nutritionFacts.calories}
+                        totalFat={menuItem.nutritionFacts.totalFat}
+                        transFat={menuItem.nutritionFacts.transFat}
+                        cholesterol={menuItem.nutritionFacts.cholesterol}
+                        totalCarbohydrate={
+                          menuItem.nutritionFacts.totalCarbohydrate
+                        }
+                        dietaryFiber={menuItem.nutritionFacts.dietaryFiber}
+                        sugars={menuItem.nutritionFacts.sugars}
+                        protein={menuItem.nutritionFacts.protein}
+                        vitamins={[menuItem.nutritionFacts.vitaminD]}
+                      />
+                    ) : (
                       <p>Not Available</p>
                     )}
-                           </Dialog.Content>
-                      </Dialog.Root>
+                  </Dialog.Content>
+                </Dialog.Root>
               </div>
               <div>
                 <h2
@@ -153,7 +161,7 @@ export default function FoodItem({
                 >
                   Reviews
                 </h2>
-                <Divider className="bg-violet-500/30" />
+                <Divider className="mb-5 bg-violet-500/30" />
                 <ReviewForm
                   restaurantId={Number(searchParams.restaurantId)}
                   menuItemIds={[Number(searchParams.menuItemId)]}
@@ -198,13 +206,12 @@ export default function FoodItem({
                 />
               </div>
             </div>
-            <div className="m-10 flex-1 items-center justify-center max-h-xxl">
+            <div className="max-w-xxl max-h-xxl m-10 flex-1 items-center justify-center">
               {menuItem?.images && menuItem.images.length > 0 ? (
                 menuItem.images.map((image: Image, index) => (
-                  
                   <img
                     key={index}
-                    className="w-full rounded-3xl rounded-lg object-cover max-w-xl max-h-l mb-4"
+                    className="max-h-l mb-4 w-full max-w-xl rounded-3xl rounded-lg object-cover"
                     src={image.url}
                     alt="Author"
                   />

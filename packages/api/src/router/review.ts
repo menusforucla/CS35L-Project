@@ -38,7 +38,7 @@ export const reviewRouter = createTRPCRouter({
     .input(z.number())
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.review.findMany({
-        where: { restaurantId: input },
+        where: { restaurantId: input, menuItems: { none: {} } },
         include: {
           user: true,
         },
