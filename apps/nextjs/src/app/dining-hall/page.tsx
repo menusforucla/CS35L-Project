@@ -20,7 +20,7 @@ import ReviewComponent from "../_components/food-item/review-component";
 import ReviewForm from "../_components/review-form";
 
 export type ReviewWithUser = Review & { user: User };
-type MenuItemsWithAllergensAndDietPrefs = MenuItem & {
+export type MenuItemsWithAllergensAndDietPrefs = MenuItem & {
   allergens: Allergen[];
   dietaryPreferences: DietaryPreference[];
 };
@@ -36,7 +36,7 @@ export default function DiningHall({
 }: {
   searchParams: {
     title: string;
-    id: number;
+    restaurantId: number;
   };
 }) {
   const [restaurant, setRestaurant] =
@@ -47,10 +47,10 @@ export default function DiningHall({
     data: diningHall,
     error: diningHallError,
     isLoading: isDiningHallLoading,
-  } = api.restaurant.byId.useQuery(Number(searchParams.id));
+  } = api.restaurant.byId.useQuery(Number(searchParams.restaurantId));
 
   const { data: restaurantReviews, error: reviewsError } =
-    api.review.byRestaurantId.useQuery(Number(searchParams.id));
+    api.review.byRestaurantId.useQuery(Number(searchParams.restaurantId));
 
   useEffect(() => {
     if (diningHall) {
@@ -65,7 +65,7 @@ export default function DiningHall({
   }, [restaurantReviews]);
 
   return (
-    <main className="bg-gradient-to-br from-blue-300 via-blue-200 to-yellow-50">
+    <main className="min-h-screen bg-gradient-to-br from-blue-300 via-blue-200 to-yellow-50">
       <div className="relative">
         <img
           className="blur-sm brightness-50"
@@ -95,7 +95,7 @@ export default function DiningHall({
             <div key={menuSection.id} className="mb-5">
               <h2
                 className="mb-2 mt-10 text-4xl font-bold"
-                style={{ color: "#454545" }}
+                style={{ color: "#0E0E0E" }}
               >
                 {menuSection.name}
               </h2>
@@ -116,6 +116,7 @@ export default function DiningHall({
                       avgRating={5}
                       allergens={menuItem.allergens}
                       dietPrefs={menuItem.dietaryPreferences}
+                      restaurantId={searchParams.restaurantId}
                     />
                   </Grid>
                 ))}
@@ -127,14 +128,14 @@ export default function DiningHall({
         <div className="w-100 h-72 items-center justify-center">
           <h2
             className="mb-2 mt-10 text-4xl font-bold"
-            style={{ color: "#454545" }}
+            style={{ color: "#0E0E0E" }}
           >
             Reviews
           </h2>
           <div className="my-4">
             <Divider className="bg-violet-500/30" />
           </div>
-          <ReviewForm restaurantId={searchParams.id} menuItemIds={[]} />
+          <ReviewForm restaurantId={searchParams.restaurantId} menuItemIds={[]} />
 
           {reviewsError ? (
             <div>Failed to load reviews.</div>

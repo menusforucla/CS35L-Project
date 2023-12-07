@@ -21,7 +21,7 @@ export const DiningHall: React.FC<DiningHallProps> = ({
 
   return (
     // https://flowbite.com/docs/components/card/
-    <Link href={{ pathname: "/dining-hall", query: { title: title, id: id } }}>
+    <Link href={{ pathname: "/dining-hall", query: { title: title, restaurantId: id } }}>
       <div className="hover:scale-102 mx-2 mt-8 max-w-sm overflow-hidden rounded-lg border-2 border-violet-800/30 bg-white bg-white/40 shadow-lg backdrop-blur transition ease-in-out hover:-translate-y-1 hover:shadow-sky-100">
         <img className="w-full rounded-t-lg" src={imageUrl} alt={title} />
         <div className="px-4 py-4">

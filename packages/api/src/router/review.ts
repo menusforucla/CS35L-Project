@@ -45,6 +45,20 @@ export const reviewRouter = createTRPCRouter({
       });
     }),
 
+  byMenuItemId: publicProcedure
+    .input(z.number())
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.review.findMany({
+        where: {
+          menuItems: {
+            some: { id: input },
+          },
+        },
+        include: {
+          user: true,
+        },
+      });
+    }),
   delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
     return ctx.prisma.review.delete({
       where: { id: input },

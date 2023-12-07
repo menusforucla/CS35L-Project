@@ -13,6 +13,7 @@ interface FoodItemsProps {
   avgRating: number;
   allergens?: Allergen[];
   dietPrefs?: DietaryPreference[];
+  restaurantId: number;
 }
 
 export const FoodItem: React.FC<FoodItemsProps> = ({
@@ -22,6 +23,7 @@ export const FoodItem: React.FC<FoodItemsProps> = ({
   avgRating,
   allergens,
   dietPrefs,
+  restaurantId,
 }) => {
   const calculateWidth = (name: string) => {
     return `${100 + 12 * name.length}px`;
@@ -33,7 +35,7 @@ export const FoodItem: React.FC<FoodItemsProps> = ({
     <Link
       href={{
         pathname: "/dining-hall/food-item",
-        query: { name: name, id: id },
+        query: { name: name, restaurantId: restaurantId, menuItemId: id },
       }}
     >
       <div className="rounded-lg border-2 border-blue-400/50 bg-sky-500/30 p-2 shadow-sm backdrop-blur transition-colors hover:bg-sky-200">
