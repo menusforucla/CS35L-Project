@@ -40,7 +40,7 @@ export const FoodItem: React.FC<FoodItemsProps> = ({
       <div className="flex h-60 rounded-lg border-2 border-blue-400/50 bg-sky-500/30 p-2 shadow-sm backdrop-blur transition-colors hover:bg-sky-200">
         <img
           className="h-full w-1/2 rounded-l-lg object-cover"
-          src={imageUrl || "/images/default-food.jpg"}
+          src={imageUrl ?? "/images/default-food.jpg"}
           alt={name}
         />
         <div className="flex w-1/2 flex-col justify-between p-4">
