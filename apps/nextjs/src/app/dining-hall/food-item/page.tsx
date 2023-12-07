@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import * as Accordion from "@radix-ui/react-accordion";
 import { UploadButton } from "@uploadthing/react";
-
+import NutritionLabel from "../../../../../../node_modules/react-nutrition-label/src/components/NutritionLabel/index";
 import { api } from "~/utils/api";
 import { AllergenTag, DietaryTag } from "../../_components/tags";
 
@@ -84,6 +84,32 @@ export default function FoodItem({
                 ))}
               </Accordion.AccordionContent>
             </Accordion.Item>
+            <Accordion.Item value="value4">
+              <Accordion.AccordionTrigger>
+              Nutrition Facts
+              </Accordion.AccordionTrigger>
+                <Accordion.AccordionContent>
+                  {
+                  foodItem?.nutritionFacts ?
+                  <NutritionLabel 
+                  servingSize={foodItem.nutritionFacts.servingSize} 
+                  saturatedFat={foodItem.nutritionFacts.saturatedFat} 
+                  sodium={foodItem.nutritionFacts.sodium} 
+                  servingsPerContainer={foodItem.nutritionFacts.servingsPerContainer} 
+                  calories={foodItem.nutritionFacts.calories} 
+                  caloriesFromFat={foodItem.nutritionFacts.caloriesFromFat} 
+                  totalFat={foodItem.nutritionFacts.totalFat}
+                  transFat={foodItem.nutritionFacts.transFat}
+                  cholesterol={foodItem.nutritionFacts.cholesterol}
+                  totalCarbohydrate={foodItem.nutritionFacts.totalCarbohydrate}
+                  dietaryFiber={foodItem.nutritionFacts.dietaryFiber}
+                  sugars={foodItem.nutritionFacts.sugars}
+                  protein={foodItem.nutritionFacts.protein}
+                  vitamins={[foodItem.nutritionFacts.vitamins]}/>
+                  : <Grid></Grid>
+                  }
+                </Accordion.AccordionContent>            
+              </Accordion.Item>
           </Accordion.Root>
         </Grid>
       </Grid>
