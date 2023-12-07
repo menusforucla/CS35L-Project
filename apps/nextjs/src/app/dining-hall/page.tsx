@@ -11,6 +11,7 @@ import type {
   Image,
   MenuItem,
   MenuSection,
+  NutritionFacts,
   Restaurant,
   Review,
   User,
@@ -27,6 +28,7 @@ export type MenuItemsWithAllergensAndDietPrefsAndImages = MenuItem & {
   allergens: Allergen[];
   dietaryPreferences: DietaryPreference[];
   images: Image[];
+  nutritionFacts: NutritionFacts;
 };
 type MenuSectionsWithMenuItems = MenuSection & {
   menuItems: MenuItemsWithAllergensAndDietPrefsAndImages[];
