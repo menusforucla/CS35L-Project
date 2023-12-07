@@ -22,6 +22,7 @@ export const restaurantRouter = createTRPCRouter({
               include: {
                 allergens: true,
                 dietaryPreferences: true,
+                images: true,
               },
             },
           },

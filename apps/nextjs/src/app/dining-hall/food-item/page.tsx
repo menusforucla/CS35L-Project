@@ -5,7 +5,7 @@ import { Divider } from "@mui/material";
 
 import "@uploadthing/react/styles.css";
 
-import type { Image } from "@menus-for-ucla/db";
+import { Image } from "@menus-for-ucla/db";
 
 import ReviewComponent from "~/app/_components/food-item/review-component";
 import ReviewForm from "~/app/_components/review-form";
@@ -13,20 +13,17 @@ import { api } from "~/utils/api";
 import { UploadButton } from "~/utils/uploadthing";
 import { AllergenTag, DietaryTag } from "../../_components/tags";
 import type {
-  MenuItemsWithAllergensAndDietPrefs,
+  MenuItemsWithAllergensAndDietPrefsAndImages,
   ReviewWithUser,
 } from "../page";
-
-type MenuItemWithImages = MenuItemsWithAllergensAndDietPrefs & {
-  images: Image[];
-};
 
 export default function FoodItem({
   searchParams,
 }: {
   searchParams: { name: string; menuItemId: number; restaurantId: number };
 }) {
-  const [menuItem, setMenuItem] = useState<MenuItemWithImages | null>(null);
+  const [menuItem, setMenuItem] =
+    useState<MenuItemsWithAllergensAndDietPrefsAndImages | null>(null);
   const [reviews, setReviews] = useState<ReviewWithUser[] | null>(null);
 
   const {
@@ -166,7 +163,7 @@ export default function FoodItem({
             </div>
             <div className="m-10 flex-1">
               {menuItem?.images && menuItem.images.length > 0 ? (
-                menuItem.images.map((image, index) => (
+                menuItem.images.map((image: Image, index) => (
                   <img
                     key={index}
                     className="w-full rounded-3xl rounded-lg object-cover"
