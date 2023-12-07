@@ -237,7 +237,7 @@ export default function DiningHall({
                 menuSection.menuItems.length > 0 && (
                   <div key={menuSection.id} className="mb-5">
                     <h2
-                      className="mb-2 mt-10 text-4xl font-bold"
+                      className="mb-2 mt-10 text-4xl font-bold font-serif"
                       style={{ color: "#0E0E0E" }}
                     >
                       {menuSection.name}
