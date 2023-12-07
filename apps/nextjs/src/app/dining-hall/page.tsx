@@ -113,7 +113,7 @@ export default function DiningHall({
   }));
 
   return (
-    <main className="font-sans min-h-screen bg-gradient-to-br from-blue-300 via-blue-200 to-yellow-50">
+    <main className="min-h-screen bg-gradient-to-br from-blue-300 via-blue-200 to-yellow-50 font-sans">
       <div className="relative">
         {restaurant?.name === "Epicuria" ? (
           <img
@@ -156,7 +156,7 @@ export default function DiningHall({
           />
         ) : null}
         <h1
-          className="font-serif absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-5xl font-bold"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform font-serif text-5xl font-bold"
           style={{ color: "white" }}
         >
           {searchParams.title}
@@ -237,7 +237,7 @@ export default function DiningHall({
                 menuSection.menuItems.length > 0 && (
                   <div key={menuSection.id} className="mb-5">
                     <h2
-                      className="mb-2 mt-10 text-4xl font-bold font-serif"
+                      className="mb-2 mt-10 font-serif text-4xl font-bold"
                       style={{ color: "#0E0E0E" }}
                     >
                       {menuSection.name}
@@ -260,7 +260,9 @@ export default function DiningHall({
                             allergens={menuItem.allergens}
                             dietPrefs={menuItem.dietaryPreferences}
                             restaurantId={searchParams.restaurantId}
-                            imageUrl={menuItem.images[0]?.url}
+                            imageUrl={
+                              menuItem.images[menuItem.images.length - 1]?.url
+                            }
                           />
                         </Grid>
                       ))}
