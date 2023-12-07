@@ -39,7 +39,7 @@ tooling
   |   └─ shared tailwind configuration
   └─ typescript
       └─ shared tsconfig you can extend from
-
+```
 ## Quick Start
 
 To get it running, follow the steps below:
@@ -48,6 +48,9 @@ To get it running, follow the steps below:
 
 - [Node.js](https://nodejs.org/en)
 - [pnpm](https://pnpm.io)
+- [Prisma](https://www.prisma.io/client) or a different MySQL Database
+- [uploadthing](https://uploadthing.com/) image uploading service
+- [OAuth 2.0 credentials](https://console.developers.google.com/apis/credentials)
 
 ### 2. Setup dependencies
 
@@ -69,33 +72,6 @@ pnpm db:push
 
 1. Run `pnpm --filter nextjs dev` at the project root folder. This should run the website on http://localhost:3000.
 
-#### Use iOS Simulator
-
-1. Make sure you have XCode and XCommand Line Tools installed [as shown on expo docs](https://docs.expo.dev/workflow/ios-simulator).
-
-   > **NOTE:** If you just installed XCode, or if you have updated it, you need to open the simulator manually once. Run `npx expo start` in the root dir, and then enter `I` to launch Expo Go. After the manual launch, you can run `pnpm dev` in the root directory.
-
-   ```diff
-   +  "dev": "expo start --ios",
-   ```
-
-2. Run `pnpm --filter nextjs dev` at the project root folder. This initiates the Next.js website, which incorporates tRPC. The app uses tRPC to communicate with the API.
-
-3. In another terminal window, run `pnpm --filter expo dev` at the project root folder. This command runs the iOS application in an emulator.
-
-#### Use Android Emulator
-
-1. Install Android Studio tools [as shown on expo docs](https://docs.expo.dev/workflow/android-studio-emulator).
-
-2. Change the `dev` script at `apps/expo/package.json` to open the Android emulator.
-
-   ```diff
-   +  "dev": "expo start --android",
-   ```
-
-3. Run `pnpm --filter nextjs dev` at the project root folder. This initiates the Next.js website, which incorporates tRPC. The app uses tRPC to communicate with the API.
-
-4. In another terminal window, run `pnpm --filter expo dev` at the project root folder. This command runs the Android application in an emulator.
 
 ### Does this pattern leak backend code to my client applications?
 
