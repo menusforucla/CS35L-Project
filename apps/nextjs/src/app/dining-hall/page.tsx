@@ -75,12 +75,12 @@ export default function DiningHall({
           <img
             className="blur-sm"
             src={"/images/epic.webp"}
-            alt="Dining Hall"
+            alt="Dining Hall 1"
             style={{
               width: "100%",
               height: "33vh",
               objectFit: "cover",
-              objectPosition: "100% 45%",
+              objectPosition: "100% 40%",
               filter: "brightness(0.75)",
             }}
           />
@@ -88,7 +88,7 @@ export default function DiningHall({
           <img
             className="brightness-30"
             src={"/images/deneve.webp"}
-            alt="Dining Hall"
+            alt="Dining Hall 2"
             style={{
               width: "100%",
               height: "33vh",
@@ -101,7 +101,7 @@ export default function DiningHall({
           <img
             className="brightness-30"
             src={"/images/bplate.webp"}
-            alt="Dining Hall"
+            alt="Dining Hall 3"
             style={{
               width: "100%",
               height: "33vh",

@@ -11,7 +11,12 @@ import Link from "next/link";
 import { Text, Theme } from "@radix-ui/themes";
 
 import { DiningHall } from "./_components/home/dining-hall";
-
+const restaurantImageMapping = {
+  Epicuria: "/images/epic1.webp",
+  DeNeve: "/images/deneve1.webp",
+  BruinPlate: "/images/bplate1.webp",
+  // Add more mappings as needed
+};
 export default function HomePage() {
   const { data: restaurants, error, isLoading } = api.restaurant.all.useQuery();
   if (error) return <div>Failed to load</div>;
@@ -26,16 +31,18 @@ export default function HomePage() {
               Sign In
             </button>
           </Link>
-          <Text size="9">Menus for UCLA</Text>
+          <Text size="9" style={{ fontFamily: 'Anton, sans-serif', fontWeight: 'bold', color: '#0192c6' }}>Menus for UCLA</Text>
           <div className="flex w-full justify-around">
             {restaurants?.map((restaurant, index: number) => (
+              restaurant.name == "Epic at Ackerman" ? null : (
               <DiningHall
                 key={index}
                 title={restaurant.name}
-                imageUrl="/images/KrustyKrab.webp"
+                imageUrl={restaurantImageMapping[restaurant.name]}
                 availability={restaurant.currentActivityLevel}
                 id={restaurant.id}
               />
+              )
             ))}
           </div>
         </div>
