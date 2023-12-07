@@ -8,7 +8,7 @@ import "react-circular-progressbar/dist/styles.css";
 
 import React from "react";
 import Link from "next/link";
-import { Text, Theme, ThemePanel } from "@radix-ui/themes";
+import { Text, Theme } from "@radix-ui/themes";
 
 import { DiningHall } from "./_components/home/dining-hall";
 
