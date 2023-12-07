@@ -24,6 +24,13 @@ export default function ReviewForm({
     console.log(review);
     console.log(rating);
     if (review.length > 0 && rating != null) {
+      console.log({
+        restaurantId: restaurantId,
+        rating: rating,
+        review: review,
+        menuItemIds: menuItemIds,
+        images: [],
+      });
       createReview.mutate({
         restaurantId: restaurantId,
         rating: rating,
@@ -42,9 +49,7 @@ export default function ReviewForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <h2 className="text-xl font-semibold">Write a Review</h2>
-      <StarRating
-        onRating={(rating: number) => setRating(rating)}
-      />
+      <StarRating onRating={(rating: number) => setRating(rating)} />
       <textarea
         className="w-full rounded-md border-gray-300 p-4 text-sm focus:border-blue-500 focus:ring-blue-500"
         placeholder="Write your review here..."

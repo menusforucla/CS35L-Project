@@ -34,11 +34,16 @@ export const reviewRouter = createTRPCRouter({
     });
   }),
 
-  byRestId: publicProcedure.input(z.number()).query(({ ctx, input }) => {
-    return ctx.prisma.review.findMany({
-      where: { restaurantId: input },
-    });
-  }),
+  byRestaurantId: publicProcedure
+    .input(z.number())
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.review.findMany({
+        where: { restaurantId: input },
+        include: {
+          user: true,
+        },
+      });
+    }),
 
   delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
     return ctx.prisma.review.delete({
