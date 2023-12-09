@@ -106,3 +106,5 @@ Read more about the setup in [the auth proxy README](./apps/auth-proxy/README.md
 ## References
 
 The stack originates from [create-t3-app](https://github.com/t3-oss/create-t3-app).
+This project uses [Radix UI](https://www.radix-ui.com/), [MUI](https://mui.com/), and [Tailwind CSS](https://tailwindcss.com/) for UI. There are also other UI packages which can be found in `apps/nextjs/package.json`. 
+This project uses [tRPC](https://trpc.io) for type-safe API calls and [Prisma](https://www.prisma.io/) for type-safe database access.
