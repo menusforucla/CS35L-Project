@@ -1,3 +1,5 @@
+// Majority of code is from https://docs.uploadthing.com/getting-started/appdir
+
 import { createUploadthing } from "uploadthing/next";
 import type { FileRouter } from "uploadthing/next";
 
